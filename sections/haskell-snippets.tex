@@ -1,0 +1,208 @@
+\section{Haskell Snippets}
+\subsection*{Infix/Prefix}
+Most operators are infix while function-like operators are prefix.
+\begin{minted}{haskell}
+-- infix
+a + b
+a `mod` b
+-- prefix
+(+) a b
+mod a b
+\end{minted}
+
+\subsection*{Func, Lambda, \& Currying}
+\begin{minted}[fontsize=\scriptsize]{haskell}
+fn :: T1 -> T2 -> ... -> Tn -> RTp
+fn x1 x2 ... xn = body
+\end{minted}
+is equivalent to
+\begin{minted}[fontsize=\scriptsize]{haskell}
+fn :: T1 -> (T2 -> (... -> (Tn -> RTp)))
+fn \x1 -> (\x2 -> (... -> (xn -> body)))
+\end{minted}
+and similar to
+\begin{minted}{haskell}
+fn = \x1 x2 ... xn -> body
+\end{minted}
+Note this latter also shows partial function application.
+
+\subsection*{Type Inference}
+\begin{minted}[fontsize=\scriptsize]{haskell}
+foo :: Int -> Int -> Bool
+foo x y = x > (y + 5)
+bletch :: [t] -> [[t]]
+beltch = map (\x -> [x])
+bar ::
+  [t] -> [Char] -> (t -> [Char]) -> Bool
+bar a b c = head (map c a) > (b ++ "!")
+\end{minted}
+
+\subsection*{Conditional}
+\begin{minted}{haskell}
+if cond1 then "body1"
+else if cond2 then "body2"
+-- ...
+else "otherwise"
+\end{minted}
+
+\subsection*{Guards}
+\begin{minted}{haskell}
+fn params -- no equal here
+  | cond1 = "body1"
+  | cond2 = "body2"
+  -- ...
+  | otherwise = "else"
+\end{minted}
+
+\subsection*{Lists}
+List can be compared with == and comparison is elementwise. Common list
+operations are
+\begin{minted}{haskell}
+null lst -- is list is empty
+e1 : lst -- append to front (cons)
+e1 : e2 : lst -- and so on
+l1 ++ l2 -- list concatenation
+head lst -- front of list
+tail lst -- back of list
+length lst
+-- from the front
+take n lst -- n-slice of list
+drop n lst -- ^ complement
+elem e lst -- e in lst
+sum lst -- sum reduce
+or lst -- or reduce
+and lst -- and reduce
+-- trims to shortest
+zip l1 l2 -- zips lists
+cycle lst -- cyclic list
+reverse lst
+\end{minted}
+There are also ranges. Bounds are inclusive unless the step skips them.
+\begin{minted}{haskell}
+-- assume a <= b
+[a..b] -- range from a to b
+[b+1..a] -- always []
+[a..] -- unbounded list
+[a,a+2..b] -- skips a + 1 + 2*n
+\end{minted}
+
+\subsection*{List Comprehensions}
+\begin{minted}{haskell}
+[X | Y1, Y2, ...]
+\end{minted}
+X is the result of each iteration. Yn is either a list mapping denoted
+as \lstinline|Yn <- ln| or a guard denoted as a function that returns
+\lstinline|Bool|. Consecutive list mappings are nested not joined.
+
+\subsection*{Pattern Matching}
+Define the function multiple times replacing variables with literals,
+lists, cons, Type constructors, etc. Haskell will attempt to match a
+call to the first matching definition.
+\begin{minted}{haskell}
+-- literals
+f1 1 = "one"
+f1 a = a
+-- cons (xs may be empty)
+f2 [] = "empty"
+f2 (x:xs) = "h rest"
+f2 (x:y:xs) = "h h rest"
+-- Type constructor
+data T = 
+  A           |
+  B Float Int |
+  C Int
+f3 (A) = "A"
+f3 (B a b) = "B"
+f3 (C a) = "C"
+\end{minted}
+
+\subsection*{Higher Order Funcs}
+\begin{minted}[fontsize=\scriptsize]{haskell}
+-- mappper
+map :: (a -> b) -> [a] -> [b]
+-- filter
+filter :: (a -> Bool) -> [a] -> [a]
+-- reducer
+foldl :: (b -> a -> b) -> b -> [a] -> b
+foldr :: (a -> b -> b) -> b -> [a] -> b
+\end{minted}
+Mappers map values from type `a` to type `b`.
+\begin{itemize}
+  \item first param is a function
+  \item second param is a list of values with type `a'
+  \item result is a list of values with type `b'
+\end{itemize}
+Filters exclude elements from list and returns list of same type.
+\begin{itemize}
+  \item first param is a predicate
+  \item second param is the list to be filtered
+  \item result is the filtered list
+\end{itemize}
+Reducers transform a list into something else (often not a list)
+\begin{itemize}
+  \item first param is the reducer
+  \begin{itemize}
+    \item first param is the reduced value so far
+    \item second param is the one item from the list
+    \item result is a value of type `b`
+  \end{itemize}
+  \item second param is an initial value of type `b`
+  \item third param is a list of values of type `a`
+  \item result is of type `b`
+\end{itemize}
+
+\subsection*{Abstract Data Types}
+Composed of a set of Variants
+\begin{minted}{haskell}
+data T1 = V1 | V2 | ... | Vn
+-- can also define members
+data T1 =
+  V1 Tp1 Tp2 |
+  V2 Tq1 Tq2 |
+  -- ...
+  Vn -- ...
+-- or give them names
+data T1 =
+  V1 { p1 :: Tp1, p2 :: Tp2} |
+  V2 { q1 :: Tq1, q2 :: Tq2} |
+  -- ...
+  Vn -- ...
+\end{minted}
+Giving names to the members of a Variant allows to patern match them in
+different order than defined.
+
+\subsection*{ADT Applications}
+Linked list
+\begin{minted}{haskell}
+data List = 
+  Nil | 
+  Node {
+    val :: Int
+    next :: List
+  }
+\end{minted}
+\textit{adding a node to the end of a linked list in Haskell is O(n) because of immutability.}
+
+Binary Search Tree
+\begin{minted}{haskell}
+data BTree =
+  Nil |
+  Node {
+    val : Int
+    left :: BTree
+    right :: BTree
+  }
+\end{minted}
+\textit{immutability does not alter complexity of adding node to balanced tree.}
+
+\subsection*{Miscelaneous}
+\begin{minted}{haskell}
+(-4) -- paren is often required
+5 == 6 -- true
+5 /= 6 -- false (not equal)
+-- [Char] is same as String
+-- equiv to f(x, g, y)
+f x g y
+-- equiv to f(x, g(y))
+f x (g y)
+\end{minted}
