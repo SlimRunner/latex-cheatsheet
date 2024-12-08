@@ -1,8 +1,12 @@
 \section{Python}
-Everything on Python are objects. Variables hold a reference to an
-object. All objects live on the heap. All primitive types are immutable
-objects. None is a singleton. Python uses referece count to garbage
-collect. Arguments are passed by object reference.
+Everything on Python are objects. Variables hold a mutable reference to
+an object. All objects live in the heap. All primitive types are
+immutable objects. Python uses referece count to garbage collect.
+Arguments are passed by object reference.
 
 Deepcopy is useful to make copies of complex user defined objects, and it
 can handle circular references.
+
+Python multithreading is limited by the garbage collection which puts a
+lock on objects that essentially results in what seems like single
+threaded async calls.
