@@ -1,0 +1,14 @@
+\section{Scoping}
+The scope is the sections of the program where a variable is valid
+during its lifetime.
+
+\subsection*{Lexical Scoping}
+It uses lexical environments to set boundaries for the scope of
+variables. Functions have disjoint lexical environments while blocks
+such as if-statement, for-loop, etc. have nested lexical environments.
+Nested environments allow shadowing.
+
+\subsection*{Dynamic Scoping}
+It uses chronological order of definition to create scopes. It
+disregards lexical scopes jump between disjoint lexical environments. It
+also supports shadowing.
