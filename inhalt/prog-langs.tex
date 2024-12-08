@@ -1,0 +1,46 @@
+\section{Programming Languages}
+\subsection*{Building Blocks \& Dimensions}
+These are some traits that makes a prog. language distinct:
+\begin{itemize}
+  \item type systems
+  \item parameter passing
+  \item scoping
+  \item memory management
+\end{itemize}
+Some other considerations are
+\begin{itemize}
+  \item variable declaration/assignment
+  \item rules for implicit conversions
+  \item container bound checks
+\end{itemize}
+Finally, all of these can be categorized into:
+\begin{itemize}
+  \item \textbf{syntax}: legal ways to write code in the language. This
+  is to code what grammar is to human language.
+  \item \textbf{semantics}: \textit{meaningful} was to write code in the
+  langauge. A sentence in English may be correct, but does it make
+  sense?
+\end{itemize}
+
+There are compiled and interpreted languages.
+% These are broad categories that in the real world overlap, but in
+% general if a \textit{binary} is generated which does not change
+% directly as a result of changing the source code then it is said to be
+% compiled.
+
+\subsection*{Compilation}
+Starts with \textit{source code} which is used by \textbf{Lexer} to
+generate \textit{Lexical Units} which are used by \textbf{Parser} to
+generate an \textit{Abstract Syntax Tree} which is used by
+\textbf{Semantic Analyzer} to generate an \textit{Annotated Parse Tree}
+which is used by \textbf{Intermediate Representation Generator (IRG)} to
+generate an \textit{Intermediate Representation (IR)} which is used by
+\textbf{Code Generator} to generate \textit{Machine Code or Byte Code}
+which is put together by a \textbf{linker} into a \textit{binary} or
+\textbf{interpreted} instruction by instruction, normally, from the byte
+code.
+
+\textit{Quick Facts}: a pretty commonly used IR is LLVM; the process of
+compiling a compiler for the language you are creating is called
+bootstrapping. In the real world compilation and interpreting overlap
+especially, but not exclusively with just-in-time (JIT) compilers.
