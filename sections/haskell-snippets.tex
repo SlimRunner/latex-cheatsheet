@@ -12,13 +12,13 @@ mod a b
 
 \subsection*{Func, Lambda, \& Currying}
 \begin{minted}[fontsize=\scriptsize]{haskell}
-fn :: T1 -> T2 -> ... -> Tn -> RTp
+fn :: T1 -> T2 -> ... -> Tn -> Tr
 fn x1 x2 ... xn = body
 \end{minted}
 is equivalent to
 \begin{minted}[fontsize=\scriptsize]{haskell}
-fn :: T1 -> (T2 -> (... -> (Tn -> RTp)))
-fn \x1 -> (\x2 -> (... -> (xn -> body)))
+fn :: T1 -> (T2 -> (... -> (Tn -> Tr)))
+fn=\x1 -> (\x2 -> (... -> (xn -> body)))
 \end{minted}
 and similar to
 \begin{minted}{haskell}
