@@ -1,0 +1,43 @@
+\section{Var Binding Semantics}
+The ways in which a variable name can be associated to memory or data.
+
+\subsection*{Value Semantics}
+The variable name is directly associated with the data it represents.
+
+\subsection*{Reference Semantics}
+The variable name is indirectly associated to data through another
+variable's storage. The link to the other variable often cannot be
+changed. Similar concept to hardlinks. \textit{Multiple doors to the
+same room}.
+
+The original data can be changed through both assignments and mutations.
+
+\subsection*{Object Reference Semantics}
+The variable name is associated to a pointer that identifies the place
+where data is stored. Similar concept to a symlink. \textit{A room where
+the door has a postit saying where the real room is}.
+
+Assignments change the pointer while mutations change the pointed-to
+data. In Python \lstinline|+=| is a mutator not an assignment unlike
+using \lstinline|=| and \lstinline|+| separately.
+
+An issue with this method when passing parameters is \textbf{aliasing}.
+It essentially two parameters are assigned a reference to the same
+object. A way to avoid this issue is \textit{passing by value-result}.
+The variable is passed by value but the function upon return ensures the
+original variable gets updated.
+
+\subsection*{Name/Need Semantics}
+The variable name is associated to a node within a graph or set of
+graphs which are connected by their relationships established by the
+expressions they appear in.
+
+The important difference beteween name and need semantics is that in
+name semantics must recompute the whole traversal of the graph each time
+it needs a value.
+
+In need semantics the recomputation may not be needed if the language
+can determine that the side effects of the graph traversal haven't
+changed. Need semantics often benefits from immutability.
+
+Deferred computations are called \textit{thunks}.

@@ -1,0 +1,28 @@
+\section{Mutability}
+If something is immutable it means its internal data cannot change.
+Essentially it is read only.
+
+Using immutability can improve code quality and help prevent
+\begin{itemize}
+  \item aliasing bugs
+  \item identity bugs
+  \item multithreading bugs
+  \item temporal coupling bugs
+\end{itemize}
+
+\subsection*{Class Immutability}
+This is a feature of a language that prevents data in classes from
+changing once it has been instantiated. If a language has class
+immutability it \textit{cannot} be optional.
+
+\subsection*{Object Immutability}
+Similar to class immutability except that the programmer can decide
+which specific instances of the class are mutable.
+
+\subsection*{Assignment Immutability}
+It prevents re-assignment to the bound variable. Methods may still
+mutate the instance.
+
+\subsection*{Reference Immutability}
+It prevents mutations through a reference. For example, in C++
+\lstinline|const &|.

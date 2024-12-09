@@ -1,0 +1,33 @@
+\section{Prolog}
+An inference engine that takes queries over a knowledge base and returns
+an answer. It is based on \textbf{facts} and \textbf{rules}. It is an
+example of declarative programming: defining what you want to do, not
+how to do it.
+
+Facts can be defined by a functor and a set of atoms or variables as
+arguments. Both functors and arguments must start be lowercase.
+Variables must start with uppercase. Queries and facts are
+interchangeable unless type considerations prohibit it (rare).
+
+Also, the functor of a collection of facts with matching arity is called
+a predicate.
+
+\subsection*{Evaluation}
+It happens from top to bottom and from left to right within facts and
+rules. Once the query is matched to all the facts this is called
+\textbf{resolution}. Associations from Variables to atoms (binding) as
+the evaluation happens is called a \textbf{mapping}. Each time one
+happens there is likely going to be a recursive call which starts from
+the top again with updated mappings (DFS).
+
+\subsection*{Unification}
+When all the mappings of an attempted matching are consistent. These are
+the substeps of a resolution. The general steps are
+\begin{enumerate}
+  \item apply current mappings
+  \item treat goal and fact/rule as a tree
+  \item variables can match anything
+  \item otherwise check children count matches (same arity)
+  \item match each children
+  \item check for consistency (no contradictions)
+\end{enumerate}

@@ -1,0 +1,51 @@
+\section{Inheritance}
+Inheritance allows to reduce code repetition by sharing behaviors and
+data members between related types.
+
+There are multiple types of inheritance
+
+\subsection*{Interface}
+It tells a class \textit{what} we want to implement not \textit{how}. It
+allows to share and bound behaviors among unrelated classes. In a sense
+it is a contract (a will) that the inheritors must satisfy.
+
+Interfaces have only functions with declaration but no definition, and
+they are called \textit{abstract classes} while inheritors are called
+\textit{concrete classes}.
+
+An interface creates a \textit{can support} relationship.
+
+\subsection*{Subclassing Inheritance}
+It is similar to the interface but the class may actually have some
+code. Usually, that code is inherited by derived class. The ones without
+code must be implemented, the ones with code can be overriden. Ideally
+all subclasses must share the same interface and semantics as their
+base.
+
+Subclassing inheritance is creates a \textit{is-a} relationship.
+
+It is susceptible to the fragile base class problem which describes a
+problem where a change in the super class breaks the behavior of the
+derived classes.
+
+\textbf{Delegation} is an alternative to inheritance that create a
+\textit{can use} relationship with another class. The popular saying
+goes that ``prefer composition over inheritance''.
+
+\subsection*{Implementation Inheritance}
+Private inheritance in C++ summarizes this well. An inheritor gets the
+implementations of the base class but not its public interface.
+
+\subsection*{Inheritance Typing}
+Inheritance creates new supertypes and subtypes of the related classes.
+Types of interfaces are called reference types because they cannot be
+instantiated directly.
+
+\subsection*{Subtype Polymorphism}
+Subtype Polymorphism is the ability to substitute an object of a subtype
+(e.g., Circle) anywhere a supertype (e.g., Shape) is expected. More
+technically, S.P. is where code designed to operate on an object of type
+T operates on an object that is a subtype of T.
+
+Dynamically typed languages cannot have subtype polymorphism. Duck
+typing is note subtype polymorphism.

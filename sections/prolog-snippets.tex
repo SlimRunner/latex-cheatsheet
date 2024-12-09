@@ -1,0 +1,39 @@
+\section{Prolog Snippets}
+\subsection*{General Syntax}
+\begin{minted}{prolog}
+% a fact
+functor(at1, at2, ...).
+% a rule
+functor(at1, at2, ...) :-
+    f1(...),f2(...).
+\end{minted}
+Rules can also be shortcircuited
+\begin{minted}{prolog}
+func(atom) :- !.
+\end{minted}
+The negation operator
+\begin{minted}{prolog}
+func(atom) :- not(...).
+\end{minted}
+
+\subsection*{Built-ins}
+Functions will be showcased with queries that return true. Their
+names should make it clear what they do.
+\begin{minted}{prolog}
+?- append([1,2],[3,4],[1,2,3,4])
+?- sort([4,3,1], [1,3,4])
+?- permutation([4,3,1], [3,1,4])
+?- reverse([1,2,3],[3,2,1])
+?- member(6, [1,6,4])
+?- sum_list([4,3,1], 8)
+\end{minted}
+
+\subsection*{Lists}
+\begin{minted}{prolog}
+% normal list
+[i1, i2, ...]
+% cons
+functor([X1, X2, ... | XS])
+% equivalent to 
+functor(cons(X1, X2, ..., XS))
+\end{minted}

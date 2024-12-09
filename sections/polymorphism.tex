@@ -1,0 +1,36 @@
+\section{Polymorphism}
+Allows to operate on a subtype as if it was one of its supertypes.
+
+Class inheritance and generic programming are two examples of
+polymorphism. In static typed language there are
+\begin{itemize}
+  \item \textbf{Ad-hoc polymorphism}: essentially using function
+  overloading to operate differently on different types.
+  \item \textbf{Subtype polymorphism}: a function that can work on a
+  base class and by extension any derived class.
+  \item \textbf{Parametric polymorphism}: essentially a generic function
+  that can handle multiple, possibly unrelated, types.
+\end{itemize}
+
+In un-typed languages, such as Python, \textbf{ad-hoc} is \textit{not}
+possible because overloading does not work in languages without function
+signatures. However, parametric polymorphism is possible through duck
+typing.
+
+\subsection*{Parametric Polymorphism}
+Can be implemented as \textbf{templates} or \textbf{generics}.
+
+\textbf{Templates} do almost all of the work at compile-time, and
+generate a concrete version of each function needed. Once templates
+finish resolving the result is code that could have been written by
+hand.
+
+\textbf{Generics} Instead of generating a new function for each
+parametrized type, it compiles just one ``version'' of the generic
+function or class---independent of the types that actually use the
+generics function.
+
+It requires that the function is \textit{universal}. Meaning that any
+type can be used in place of the generic type. In order to give
+flexibility languages allow to \textit{type bound} the generics to an
+arbitrary subset of subtypes.

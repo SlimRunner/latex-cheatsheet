@@ -1,0 +1,63 @@
+\section{Error Handling}
+Errors can come from many sources: bugs, unrecoverable errors,
+recoverable errors, and others.
+
+Some ways to handle them are
+
+\subsection*{Error Objects}
+Error objects never contain a valid value. They often also contain a
+message about the error. These objects can also be nested to represent a
+chain of failure events.
+
+One alternative strategy to implement this is to return a tuple from a
+function call which contains the actual result and the error object (or
+null).
+
+\subsection*{Result Objects}
+These wrap the result of a function within an object that stores
+information whether the value is valid or not. In some languages such as
+Rust trying to access an invalid values leads to a panic.
+
+\subsection*{Optional Objects}
+Similar to result objects, but they do not provide details for the
+failure.
+
+\subsection*{Assertions}
+These let execution continue if they can verify their assertion is true.
+Typically, the following are used to verify
+\begin{itemize}
+  \item \textbf{preconditions}: something that must be true before the
+  code continues
+  \item \textbf{postconditins}: something that must be true after the
+  code did something
+  \item \textbf{invariant}: for example, loop invariants where something
+  must hold for each iteration
+\end{itemize}
+
+\subsection*{Exception Handling}
+This is used to handle errors that are recoverable. Often it is directly
+supported by the language such as a Try-Catch clause. When an exception
+happens no more instructions will be executed, and the call stack
+becomes undone frame by frame until a try catch with a matching catch
+for the exception raised is found. Otherwise, the error keeps
+propagating until the program exits.
+
+These must be \textit{exceptional} situations, so they should be rare.
+
+Some languages also include a third clause called ``finally block''
+which is always run regardless of what the intended execution path is.
+It will even supercede any return statement anywhere else in the
+try-catch block. Exception handling can also provide some guarantees.
+\begin{itemize}
+  \item \textbf{No-Throw Guarantee}: a function guarantees that it will
+  not throw an error
+  \item \textbf{Strong Exception Guarantee}: ensures the state of the
+  program is reverted to a valid one
+  \item \textbf{Basic Exception Guarantee}: leaves the program in a
+  valid state (not necessarily as before but valid)
+\end{itemize}
+
+\subsection*{Panics}
+These are unrecoverable errors.When they happen the program will crash.
+They contain \textbf{an error message}, \textbf{a stack trace}, and
+context of why this happened.
