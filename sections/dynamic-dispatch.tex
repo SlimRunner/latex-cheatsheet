@@ -1,0 +1,17 @@
+\section{Dynamic Dispatch}
+It is the process of figuring out which method to call when a call is
+made to a virtual method at runtime. For example, when the subtype
+overrides a method from its supertype; calling that method through a
+reference type makes it non-trivial to determine which method to call at
+compile time.
+
+In \textbf{statically typed} languages dynamic dispatch is implemented
+as a pointer to a table that the program can consult at runtime when
+accessing an instance of that class type. This is called a virtual table
+(aka vtable).
+
+In \textbf{dynamically typed} langauges dynamic dispatch is implemented
+as a \textit{member} of each instance that stores the vtable.
+
+For reference the opposite of dynamic dispatch is called \textit{static
+dispatch}.

@@ -1,0 +1,41 @@
+\section{Type Checking}
+Type checks can be categorized by strictness and when the checking happens.
+
+\subsection*{Static Typing}
+Checks types at compile time. It is conservative, meaning that if it
+cannot determine with complete certainty that a variable upholds a type
+in all cases then it will not pass the check. Valid certificates of
+correctness may be in the form of narrowing or type casting.
+
+Once types are bound to variables they are fixed through the duration of
+the program. Type inference is possible if it is the type cannot be
+ambiguous.
+
+\subsection*{Dynamic Typing}
+Checks the type validity at runtime. It is more lax with type
+correctness. Code which violates type correctness will not fail until
+the offending code is executed.
+
+In DT values are assigned \textbf{type tags} while variables are
+\textit{typeless}.
+
+\textbf{Duck typing} is a strategy employed by DT which determines if an
+object can access a method at runtime. Saying goes ``If it looks like a
+duck, swims like a duck, and quacks like a duck, then it probably
+\textit{is} a duck.''
+
+\subsection*{Strong Typing}
+The runtime behavior of a strongly typed language is always defined even
+when something fails. For example, accessing an array out of bounds on
+Java \textit{always} leads to a crash.
+
+At a minimum the langauge must be
+\begin{itemize}
+  \item type safe: will prevent an operation disallowed by the operands
+  \item memory safe: prevents inappropriate memory access. A crash is a valid prevention.
+\end{itemize}
+
+\subsection*{Weak Typing}
+The runtime behavior of a weakly typed language may sometimes lead to
+undefined behavior (which is non-deterministic). For example,
+dereferencing a dangling pointer in C++ may work or may lead to a crash.

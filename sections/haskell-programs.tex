@@ -1,0 +1,235 @@
+\section*{HASK7}
+\subsection*{Part A}
+The most important part in this function was the guard for the list of
+numbers. We essentially filter out the numbers which do not divide n
+evenly. Also the instructions did t. The final code is:
+\begin{minted}{haskell}
+all_factors :: Integer -> [Integer]
+all_factors n = [x | x <- [1..n], mod n x == 0]
+\end{minted}
+
+\section*{HASK8}
+This is a textbook Bellman equation type of problem. Essentially, there
+are two recursive calls. If the heads do not match we just keep checking
+the next item in a1. If, on the other hand, they do match we must add
+the case in which the head of a1 is included and when it is excluded.
+The final code is:
+\begin{minted}[fontsize=\scriptsize]{haskell}
+count_occurrances :: [Int] -> [Int] -> Int
+count_occurrances [] a2 = 1
+count_occurrances a1 [] = 0
+count_occurrances (x1 : xs) (y1 : ys)
+  | x1 == y1 = count_occurrances xs ys + count_occurrances (x1 : xs) ys
+  | otherwise = count_occurrances (x1 : xs) ys  
+\end{minted}
+One important thing to highlight here is that the order of the 1
+basecase must come before the 0 base case; otherwise, we would get the
+wrong answer for two empty lists.
+
+\section*{HASK10}
+\subsection*{Part B}
+Use the filter and all functions to write a Haskell function named
+\codebox{only_odds} that takes in a list of Integer lists, and returns
+all lists in the input list that only contain odd numbers (in the same
+order as they appear in the input list)
+\begin{minted}{haskell}
+only_odds ss = filter (\s -> (all (\i -> mod i 2 == 1) s)) ss
+\end{minted}
+the following is equivalent
+\begin{minted}{haskell}
+only_odds :: [[Integer]] -> [[Integer]]
+only_odds = filter (all (\i -> mod i 2 == 1))
+\end{minted}
+
+\subsection*{Part C}
+Use one of foldl or foldr and the \codebox{largest} function
+to write a Haskell function named \linebreak\codebox{largest_in_list} that takes
+in a list of Strings and returns the longest String in the list. If the
+list is empty, return the empty string. If there are multiple strings
+with the same maximum length, return the one that appears first in the
+list. Do not use the map, filter or maximum functions in your answer.
+\begin{minted}{haskell}
+largest :: String -> String -> String
+largest first second =
+  if length first >= length second then first else second
+
+largest_in_list :: [String] -> String
+largest_in_list (x1 : xs) = foldl largest x1 xs
+\end{minted}
+
+\section*{HASK11}
+\subsection*{Part A}
+We have three cases to take care of. The empty list, the list with one
+element, and the list with many entries. We can use a simple
+if-expression to assign sum the values.
+\begin{minted}{haskell}
+count_if :: (a -> Bool) -> [a] -> Int
+count_if pred [] = 0
+count_if pred [x] = if pred x then 1 else 0
+count_if pred (x : xs) = 
+  (if pred x then 1 else 0) + count_if pred xs
+\end{minted}
+
+\subsection*{Part B}
+This is pretty easy we can simply take the length of the filtered list.
+\begin{minted}{haskell}
+count_if_with_filter :: (a -> Bool) -> [a] -> Int
+count_if_with_filter pred list = length (filter pred list)
+\end{minted}
+
+\subsection*{Part C}
+We need to simply add the accumulator to the result of counting or not
+each element in the list.
+\begin{minted}{haskell}
+count_if_with_fold :: (a -> Bool) -> [a] -> Int
+count_if_with_fold pred =
+  foldl (\y x -> y + (if pred x then 1 else 0)) 0
+\end{minted}
+I also took a suggestion from the linter to omit the list parameter and
+let the PFA take care of the rest.
+
+\section*{HASK14}
+\subsection*{Part C}
+Consider the following function
+\begin{minted}{haskell}
+foo :: Integer -> Integer -> Integer -> (Integer -> a) -> [a]
+foo x y z t = map t [x,x+z..y]
+\end{minted}
+When curried it becomes
+\begin{minted}[fontsize=\scriptsize]{haskell}
+foo :: Integer -> (Integer -> (Integer -> (Integer -> a) -> [a]))
+foo = \x -> (\y -> (\z -> (\t -> map t [x,x+z..y])))
+\end{minted}
+
+\section*{HASK15}
+\subsection*{Part A}
+Define a new Haskell type \codebox{InstagramUser} that has two value
+constructors (without parameters), Influencer and Normie.
+\begin{minted}{haskell}
+data InstagramUser = Influencer | Normie
+\end{minted}
+
+\subsection*{Part B}
+Write a function named \codebox{lit_collab} that takes in two
+InstagramUsers and returns True if they are both Influencers and False
+otherwise.
+\begin{minted}{haskell}
+lit_collab :: Instagram_user -> Instagram_user -> Bool
+lit_collab Influencer Influencer = True
+lit_collab a b = False
+\end{minted}
+
+\subsection*{Part C}
+Modify your \codebox{InstagramUser} type so that the Influencer value
+constructor takes in a list of Strings representing their sponsorships.
+\begin{minted}{haskell}
+data InstagramUser = Influencer [String] | Normie
+\end{minted}
+
+\subsection*{Part D}
+Write a function \codebox{is_sponsor} that takes in an \codebox{InstagramUser} and
+a String representing a sponsor, then returns True if the user is
+sponsored by sponsor (this function always returns False for Normies).
+\begin{minted}[fontsize=\scriptsize]{haskell}
+is_sponsor :: InstagramUser -> String -> Bool
+is_sponsor Normie _ = False
+is_sponsor (Influencer sponsors) entity =
+  foldl (\ acc sponsor -> acc || sponsor == entity) False sponsors
+\end{minted}
+
+\subsection*{Part E}
+Modify your \codebox{InstagramUser} type so that the Influencer value
+constructor also takes in a list of other \codebox{InstagramUser}s
+representing their followers (after their sponsors).
+\begin{minted}[fontsize=\scriptsize]{haskell}
+data InstagramUser = Influencer [String] InstagramUser | Normie
+\end{minted}
+
+\subsection*{Part F}
+Write a function \codebox{count_influencers} that takes in an
+\codebox{InstagramUser} and returns an Integer representing the number
+of Influencers that are following that user (this function always
+returns 0 for Normies).
+\begin{minted}{haskell}
+count_influencers :: InstagramUser -> Integer
+count_influencers Normie = 0
+count_influencers (Influencer sponsors followers) =
+  sum (map is_influencer followers)
+  where
+    is_influencer :: InstagramUser -> Integer
+    is_influencer Normie = 0
+    is_influencer _ = 1
+\end{minted}
+
+\section*{HASK17}
+\subsection*{Part A}
+Using C++, write a function named longestRun that takes in a vector of
+booleans and returns the length of the longest consecutive sequence of
+true values in that vector.
+\begin{minted}{cpp}
+size_t longestRun(const std::vector<bool> & bseq) {
+  size_t total = 0, max = 0;
+  for (auto const & term: bseq) {
+    total = (total + term) * term;
+    max = max < total ? total : max;
+  }
+  return max;
+}
+\end{minted}
+
+\subsection*{Part B}
+Now write the equivalent function in Haskell
+\begin{minted}[fontsize=\scriptsize]{haskell}
+longestRun :: [Bool] -> Int
+longestRun l = foldl max 0 (foldr stride [0] l)
+  where
+    stride v (r : rs) = if v then r + 1 : rs else 0 : (r : rs)
+\end{minted}
+
+\subsection*{Part C}
+Using C++, write a function named maxTreeValue that takes in a Tree
+pointer root and returns the largest value within the tree. If root is
+nullptr, return 0. This function may not contain any recursive calls
+(solution: use a stack or queue).
+\begin{minted}{cpp}
+unsigned maxTreeValue(Tree *root) {
+  if (!root) return 0;
+  std::vector<Tree *> stack{root};
+  unsigned maxval = root->value;
+  for (Tree *node = nullptr; stack.size();) {
+    node = stack.back(); stack.pop_back();
+    maxval = maxval < node->value ? node->value : maxval;
+    for (const auto & children: node->children) {
+      stack.push_back(children);
+    }
+  }
+  return maxval;
+}
+\end{minted}
+
+\subsection*{Part D}
+Write the same function using Haskell.
+\begin{minted}{haskell}
+maxTreeValue :: Tree -> Integer
+maxTreeValue Empty = 0
+maxTreeValue (Node val next) =
+  foldl (\a v -> max a (maxTreeValue v)) val next
+\end{minted}
+
+\section*{HASK19}
+\subsection*{Part A}
+This section showcases tail recursion optimization in part B.
+\begin{minted}{haskell}
+sumSquares :: Integer -> Integer
+sumSquares 0 = 0
+sumSquares n = n * n + sumSquares (n - 1)
+\end{minted}
+
+\subsection*{Part B}
+\begin{minted}{haskell}
+sumSquares :: Integer -> Integer
+sumSquares n = n = helper n 0
+where
+  helper 0 acc = acc
+  helper n acc = helper (n - 1) (acc + n * n)
+\end{minted}

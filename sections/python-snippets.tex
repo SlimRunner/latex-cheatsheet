@@ -1,0 +1,16 @@
+\section{Python Snippets}
+\subsection*{Optional Params}
+can be mutated by mistake
+\begin{minted}{python}
+def foo(opt = []):
+  opt += [len(opt) + 1]
+  print(opt)
+
+foo()  # [1]
+foo()  # [1, 2]
+foo()  # [1, 2, 3]
+foo(4) # [4, 2]
+foo()  # [1, 2, 3, 4]
+foo()  # [1, 2, 3, 4, 5]
+       # and so on
+\end{minted}

@@ -1,0 +1,37 @@
+\section{Concurrency}
+\subsection*{Multithreading}
+There are three key features of the multithreading model: \textbf{thread
+management} which allows each thread to run operations concurrently;
+when sharing resources; And, \textbf{message passing} allows different
+\textbf{synchronization} which ensures that threads do not interfere
+threads to safely send messages to each other.
+
+\subsection*{Async Programming}
+In asyncronous programming, statements in a program are not executed
+from top to bottom. Instead, a module called a runtime maintains a queue
+of coroutines to execute. A coroutine is a function that once run, can
+be paused and resumed. The runtime repeatedly dequeues, suspends, and
+resumes coroutines resulting in a concurrent execution of each of them.
+I/O operations can even be performed outside the queue while a coroutine
+is running.
+
+\subsection*{Multithreading vs. Async}
+For multithreading
+\begin{itemize}
+  \item Capable of true parallelism across cores
+  \item Preemptive multitasking
+  \item Uses more memory; each thread has extensive execution context
+  \item Race conditions are common, requiring synchronization
+  \item Best suited for CPU bound tasks
+  \item Complex error handling
+\end{itemize}
+For async
+\begin{itemize}
+  \item Concurrency without true parallelism
+  \item Cooperative mulitasking
+  \item Uses less memory; each coroutine is lightweight
+  \item Race conditions are less common due to single threaded nature
+  \item Best suited for IO bound tasks
+  \item Easy error handling
+\end{itemize}
+

@@ -1,0 +1,91 @@
+\section{Garbage Collection}
+Garbage collection (GC) is the automatic reclamation of memory which was
+allocated by a program, but is no longer referenced in code.
+\begin{itemize}
+  \item It eliminates memory leaks. This ensures memory allocated for
+  objects is freed once it’s no longer needed
+  \item It eliminates dangling pointers and the use of dead objects.
+  This prevents access to objects after they have been de-allocated
+  \item It eliminates double-free bugs. This eliminates inadvertent
+  attempts to free memory more than once
+  \item It eliminates manual memory management. This simplifies code by
+  eliminating manual deletion of memory
+\end{itemize}
+Note that GCs are non-deterministic.
+
+\subsection*{Mark and Sweep}
+It perdiodically checks what memory is still accessible (when there is
+enough \textbf{memory pressure}). The criteria are:
+\begin{itemize}
+  \item \textbf{root objects} is a global variable, local variables and
+  parameters (in all stack frames)
+  \item \textbf{reachable from a root object} likely in the heap refered
+  by a root object
+\end{itemize}
+
+It uses a queue to store the references. A bit is used to mark variables
+which are in use.
+
+After the marking is done, unmarked objects are swept. In order to
+organize the memory in the heap a linked list is used to keep track of
+all references.
+
+At the sweep step adjacent blocks of free memory are coalesced. This
+method is susceptible to memory fragmentation.
+
+\subsection*{Mark and Compact}
+The mark step is similar to Mark and Sweep. However instead of sweeping,
+a new chunk of memory large enough to allocate all the marked objects in
+a compact chunk. This prevents fragmentation, but reduces the amount of
+effective memory by half. All pointers must be updated and then the old
+memory chunk is cleared.
+
+\subsection*{Referece Counting}
+Every object has a count of how many references point to it. At every
+assignment and end-of-scope the refrences are updated.
+
+Upon destruction of an object falling to a reference count of zero, all
+its references must be reduced accordingly.
+
+Destruction may happen immediately, but most often 0-ref objects are
+stored in a list of objects to delete later. Reference counting is also
+suceptible to memory fragmentation.
+
+This strategy fails when there are \textbf{cyclic references}.
+
+\subsection*{Ownership Model}
+It is based on the fact that an object may own another (one or many). In
+some implementations there can only be one owner. When the ownership
+changes the previous one is invalidated. Rust ownership model is based
+on this. It essentially alters the lifetime of variables.
+
+Rust builds on this model further by adding a \textit{borrow checker}.
+It allows other variables to borrow the ownershipt of an oject. This
+makes it impossible to mutate the original object, but it can access the
+objects data.
+
+C++ ownership model is implemented as an STL container. They are called
+smart pointers. These are objects that point to a reference count and
+the object itself. They do \textit{not} know of each other existance
+other than the reference count.
+
+The reference counter of a shared pointer in C++ is a reference, not a
+primitive value. This allows multiple instances to update the counter in
+different scopes.
+
+\subsection*{Object End-Of-Life}
+In C++ we have something called a \textbf{destructor} which is in charge
+of destroying the object. It is \textit{always} called when the object
+lifetime ends.
+
+Most other languages with a GC have something called \textbf{Finalizer
+Methods}. Some other languages have methods to manually dispose of the
+objects, but does not expose the cleanup dynamics.
+
+Unlike a destructor, a finalizer is \textit{not} in charge of freeing
+memory. It ends other resources such as file handles or network
+connections. Also, just like GCs, finalizers may never be called.
+
+Example of manual methods are C\# `IDisposable' interface which allows to
+write a function to free non-memory resources called `Dispose()'. This
+function is not called automatically by the GC unlike a finalizer.

@@ -1,0 +1,35 @@
+\section{Conversion and Casting}
+These are similar operations but they are distinct and can be explicit
+or implicit.
+\begin{itemize}
+  \item \textbf{widening} implies going from subtype to supetype.
+  \item \textbf{narrowing} may be from supertype to subtype or to a type
+  with distinct structure (i.e. unsgined/signed or int/string).
+\end{itemize}
+Also the relationship between the types matter.
+
+\subsection*{Subtypes and Supertypes}
+Formally, $T_{\text{sub}}$ is a subtype of $T_{\text{super}}$ if and
+only if $T_{\text{sub}}\subseteq T_{\text{super}}$. That is all values
+of the subtype can be represented \textit{exactly} in the supertype.
+
+In C++ int is a subtype of double, but not a subtype of float.
+
+\subsection*{Conversion}
+Takes a value of type `A' and creates a \textit{new value} of type `B'.
+Often the underlying data structure changes. For example, converting a
+float to int.
+
+When a widening conversion is implicit it is called \textit{type
+promotion}. When a conversion of any type is implicit it is called a
+\textit{coercion}.
+
+\subsection*{Casting}
+Takes a value of type `A' and views it as if it was of type `B'. It uses
+the same underlying data structure of the source.
+
+A widening cast is called an \textit{upcast}. A narrowing cast is called
+a \textit{downcast}.
+
+When the pointer of a subtype is stored in a pointer of a supertype an
+upcast happens.

@@ -1,0 +1,10 @@
+\section{Memory Safety}
+Memory safety is a key property of strongly-typed languages. In short,
+memory safe languages prevent any memory operations that could lead to
+undefined behaviour. Considerations are
+\begin{itemize}
+  \item out-of-bound array indexes and unconstrained pointer arithmetic
+  \item casting values to incompatible types
+  \item use of uninitialized variables and pointers
+  \item use of dangling pointers to dead objects (use-after-free, double-free, …)
+\end{itemize}
