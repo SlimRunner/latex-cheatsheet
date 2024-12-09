@@ -1,0 +1,108 @@
+\section*{PRLG3}
+Considering a bunch of predicates for \codebox{color(_,_)},
+\codebox{food(_)}, and \codebox{likes(_,_)}.
+
+\subsection*{Part A}
+In prose we can say that person P likes item F, F is food, and F is
+color red. In prolog using the predicates of the facts we can write:
+\begin{minted}{prolog}
+likes_red(P) :- likes(P,F),food(F),color(F,red).
+\end{minted}
+
+\subsection*{Part B}
+In prose we can say that a person P likes item F1 which is food of color
+C, and menachen likes item F2 which is also food, and is of color C. In
+prolog using the predicates of the facts we can write:
+\begin{minted}{prolog}
+likes_foods_of_colors_that_menachen_likes(P) :-
+    likes(P, F1),
+    likes(menachen, F2),
+    food(F1),
+    food(F2),
+    color(F1, C),
+    color(F2, C).
+\end{minted}
+
+\section*{PRLG4}
+Considering the following
+\begin{minted}{prolog}
+road_between(la, seattle).
+road_between(la, austin).
+road_between(seattle, portland).
+road_between(nyc, la).
+road_between(nyc,boston).
+road_between(boston,la).
+\end{minted}
+\noindent
+We can write a prolog rule which determines if two cities are reachable
+to each other. There is something weird with the example. It forms a
+strongly connected component so for testing purpose it is not good to
+test if two cities cannot reach each other. Unless it wasn't meant to be
+general. Anyway, I could not get rid of the infinite loop, but this
+technically determines if two cities can reach each other. It just hangs
+forever if no such path exists.
+\begin{minted}{prolog}
+reachable(C1, C2) :- road_between(C1, C2).
+reachable(C1, C2) :- road_between(C2, C1).
+reachable(C1, C2) :- reachable(C1, C3), reachable(C3, C2).
+reachable(C1, C2) :- reachable(C2, C3), reachable(C3, C1).
+\end{minted}
+
+\section*{PRLG6}
+Filling in the blanks
+\begin{minted}{prolog}
+% adds a new value X to an empty list
+insert_lex(X, [], [X]).
+
+% the new value is < all values in list
+insert_lex(X, [Y | T], [X, Y | T]) :- X =< Y.
+
+% adds somewhere in the middle
+insert_lex(X, [Y | T], [Y | NT]) :-
+  X > Y, insert_lex(X, T, NT).
+\end{minted}
+\noindent
+We can think about this one in reverse. What if three atoms (no
+variables)? Then, we can quickly realize that the third function will
+truncate both lists until the first number is greater or equal to the
+head of both lists. At such point it will call either the first or
+second rule. In case of the first it that the first argument was greater
+than all numbers. Otherwise, the second list checks if the first
+argument is in order (or in fact a member of the third argument), and
+return true or false.
+
+\section*{PRLG7}
+\begin{minted}{prolog}
+% count_elem(List, Accumulator, Total)
+% Accumulator must always start at zero
+count_elem([], Total, Total).
+count_elem([Hd | Tail], Sum, Total) :-
+  Sum1 is Sum + 1,
+  count_elem(Tail, Sum1, Total).
+\end{minted}
+\noindent
+Similarly, we can verify this one by reasoning in reverse. That is by
+passing a list, a zero and a number (instead of a variable). Now we can
+clearly see that the recursive function is simply adding 1 to the
+accumulator until it equals the total.
+
+\section*{PRLG8 (optional)}
+\begin{minted}{prolog}
+% number should always be positive
+gen_list(_, 0, []) :- !.
+gen_list(X, N, [X | T]) :-
+  Nsub is N - 1, gen_list(X, Nsub, T).
+\end{minted}
+\noindent
+This is similar to problem PRLG7 except that we are subtracting, and the
+pattern matching ensures that all the items in the list are equal.
+
+\section*{PRLG9}
+\begin{minted}{prolog}
+append_item([], Item, [Item]).
+append_item([X | T], Item, [X | NT]) :-
+  append_item(T, Item, NT).
+\end{minted}
+\noindent
+Thinking in reverse makes things so much easier. Anyway, also this was
+basically problem PRLG6 without the ``insert in the middle'' step.

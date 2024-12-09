@@ -1,0 +1,254 @@
+\section*{OOP7}
+Given the following hierachies
+\begin{minted}{typescript}
+interface A { /* impl */}
+interface B implements A { /* impl */}
+interface C implements A { /* impl */}
+class D implements B, C { /* impl */}
+class E implements C { /* impl */}
+class F implements D { /* impl */}
+class G implements B { /* impl */}
+\end{minted}
+\subsection*{Part A}
+We can infer that the super types of each is
+\begin{enumerate}
+  \item[A]: has no super types
+  \item[B]: has one super type: A
+  \item[C]: has one super type: A
+  \item[D]: has super types: A, B, C
+  \item[E]: has super types: A, C
+  \item[F]: has super types: A, B, C, D
+  \item[G]: has super types: A, B
+\end{enumerate}
+\subsection*{Part B}
+The following function
+\begin{minted}{cpp}
+void foo(B b) { /* ... */ }
+\end{minted}
+\noindent
+can be called with any of the following argument types:
+\begin{itemize}
+  \item D
+  \item F
+  \item G
+\end{itemize}
+
+\subsection*{Part C}
+The following code
+\begin{minted}{cpp}
+void bar(C c) { /* ... */ }
+
+void bletch(A a) {
+  bar(a);
+}
+\end{minted}
+\noindent
+would not compile because \codebox{A} is a super type of \codebox{C},
+but \codebox{C} is not a super type of \codebox{A}
+
+\section*{OOP8}
+\textbf{Inheritance} is the concept of sharing behavior and structure in
+such a way that a class of some sort serves as a blueprint to create
+instances of objects that manipulate data in an ordered manner.
+
+\textbf{Subtype Polymorphism} is a way to taking advantage of
+inheritance to access different objects through their common traits.
+More specifically to use an specific type as if it were one of its
+subtypes.
+
+\textbf{Dynamic Dispatch} is a method of resolving function calls of
+similar names when they can be accessed through different subtypes of
+the same object. This has to be done at runtime because it cannot be
+determined at compile time which subtype the object will be represented
+as before the program runs. Therefore, something called v-table is
+attached to each class and since every pointer holds a copy of the class
+blueprint it allows the pointers to tell the compiler at runtime what
+pointer to use to perform a method call. Only functions that need to be
+overriden are included in the v-table.
+
+\section*{OOP9}
+Subtype polymorphism cannot be used in dynamically typed languages (DTL)
+because it relies on determining the type of objects to act as if they
+were of another type. However, in DTLs variables do not have type so no
+such inferences can be made from objects alone. Something similar takes
+place which is duck typing, but that is not subtype polymorphism.
+
+Dynamic dispatch on the other hand can happen in DTLs. However, since
+variables do not have type we cannot rely on the class to give
+information to the program about where to find the functions. Instead
+each \textit{object} stores this information when it is created.
+\begin{minted}{python}
+class Animal:
+  def make_noise():
+    raise NotImplementedError()
+
+class Duck(Animal):
+  def make_noise():
+    print("quack")
+
+class Dog(Animal):
+  def make_noise():
+    print("woof")
+
+def make_it_talk(animal):
+  if isinstance(animal, Animal)
+    animal.make_noise()
+  else:
+    raise ValueError()
+
+duck = Duck()
+dog = Dog()
+
+make_it_talk(duck) # prints "quack"
+make_it_talk(dog) # prints "woof"
+\end{minted}
+\noindent
+The above example is not using duck typing because this is not about
+finding a function that matches the call, but disambiguating which
+function we are meaning to call. Both duck and dog are animals but
+neither raised \codebox{NotImplementedError} because each object held in
+its v-table the correct pointer to their respective
+\codebox{make_noise}.
+
+\section*{PRLG5}
+I will place in a comment whether it unifies or not and in the list
+following the reasoning to avoid clutter.
+\begin{minted}{prolog}
+foo(bar,bletch) with foo(X,bletch)                 % (1)
+foo(bar,bletch) with foo(bar,bletch,barf)          % (2)
+foo(Z,bletch) with foo(X,bletch)                   % (3)
+foo(X, bletch) with foo(barf, Y)                   % (4)
+foo(Z,bletch) with foo(X,barf)                     % (5)
+foo(bar,bletch(barf,bar)) with foo(X,bletch(Y,X))  % (6)
+foo(barf, Y) with foo(barf, bar(a,Z))              % (7)
+foo(Z,[Z|Tail]) with foo(barf,[bletch, barf])      % (8)
+foo(Q) with foo([A,B|C])                           % (9)
+foo(X,X,X) with foo(a,a,[a])                       % (10)
+\end{minted}
+\begin{enumerate}
+  \item \textbf{Unifies} because \textbf{X} $\to$ \textbf{bar} and bletch matches
+  \item \textbf{Does not unify} because arity does not match
+  \item \textbf{Unifies} because \textbf{Z} $\lrarr$ \textbf{X} and bletch matches
+  \item \textbf{Unifies} because \textbf{X} $\to$ \textbf{barf} and \textbf{Y} $\to$ \textbf{bletch}
+  \item \textbf{Does not unify} because \textbf{bletch} does not match \textbf{barf}
+  \item \textbf{Unifies} because \textbf{foo} arity matches, \textbf{X} $\to$ \textbf{bar} (in both instances), \textbf{bletch} arity matches, and \textbf{Y} $\to$ \textbf{barf}
+  \item \textbf{Unifies} because barf matches and \textbf{Y} $\to$ \textbf{bar(a,Z)}
+  \item \textbf{Does not unify} because \textbf{Z} $\to$ \textbf{barf} and \textbf{Z} $\to$ \textbf{bletch} is a contradiction
+  \item \textbf{Unifies} because \textbf{Q} $\to$ \textbf{[A,B|C]}
+  \item \textbf{Does not unify} because \textbf{X} $\to$ \textbf{a} and \textbf{X} $\to$ \textbf{[a]} is a contradiction
+\end{enumerate}
+
+\section*{CNTL2}
+The provided code:
+\begin{minted}{python}
+class Node:
+  def __init__(self, val):
+    self.value = val
+    self.next = None
+
+class HashTable:
+  def __init__(self, buckets):
+    self.array = [None] * buckets
+
+  def insert(self, val):
+    bucket = hash(val) % len(self.array)
+    tmp_head = Node(val)
+    tmp_head.next = self.array[bucket]
+    self.array[bucket] = tmp_head
+\end{minted}
+
+\subsection*{Part A}
+For the generator
+\begin{minted}{python}
+class Node:
+  pass # same
+
+class HashTable:
+  def __init__(self, buckets):
+    pass # same
+
+  def hashGen(self):
+    for node in self.array:
+      while node:
+        yield node.value
+        node = node.next
+
+  def __iter__(self):
+    return self.hashGen()
+
+  def insert(self, val):
+    pass # same
+\end{minted}
+\noindent
+It a little cheaty because I technically used an iterator---namely
+returned an array from \codebox{__iter__}---but the question did not
+prohibit that.
+
+\subsection*{Part B}
+For the iterator class
+\begin{minted}{python}
+class HashIter:
+  def __init__(self, root):
+    self.__iter = iter(root)
+    self.__node = next(self.__iter)
+
+  def __next__(self):
+    while self.__node is None:
+      self.__node = next(self.__iter)
+    while self.__node is not None:
+      node = self.__node
+      self.__node = node.next
+      return node.value
+    raise StopIteration()
+
+class Node:
+  pass # same
+
+class HashTable:
+  def __init__(self, buckets):
+    pass # same
+
+  def __iter__(self):
+    return HashIter(self.array)
+
+  def insert(self, val):
+    pass # same
+\end{minted}
+\noindent
+Then again I used an iterator, but the prompt did not say I cannot
+iterate over the list using Python facilities.
+
+\subsection*{Part C}
+Use the iterator
+\begin{minted}{python}
+# assume htable = HashTable(...)
+# assume htable has been populated
+for node in htable:
+  print(node) # print node values
+\end{minted}
+
+\subsection*{Part D}
+Show how it works
+\begin{minted}{python}
+# assume htable = HashTable(...)
+# assume htable has been populated
+h_it = htable.__iter__()
+while True:
+  try:
+    i = h_it.__next__()
+  except StopIteration:
+    break
+  print(i)
+\end{minted}
+
+\subsection*{Part E}
+It can essentially mimic the code from the generator except it mutates
+the node value instead of yielding it.
+\begin{minted}{python}
+# inside HashTable
+def forEach(self, functor):
+  for node in self.array:
+    while node:
+      functor(node.value)
+      node = node.next
+\end{minted}

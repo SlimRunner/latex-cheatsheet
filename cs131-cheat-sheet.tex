@@ -21,6 +21,8 @@
 % https://tex.stackexchange.com/a/112573
 \usepackage[most]{tcolorbox}
 \usepackage{etoolbox}
+\usepackage{listings}
+\usepackage{realboxes}
 
 \let\bar\overline
 
@@ -54,5 +56,11 @@
 \input{sections/concurrency.tex}
 \input{sections/prolog.tex}
 \input{sections/prolog-snippets.tex}
+\end{multicols*}
+\newpage
+\begin{multicols*}{3}
+\input{sections/haskell-programs.tex}
+\input{sections/prolog-programs.tex}
+\input{sections/homework-notes.tex}
 \end{multicols*}
 \end{document}
