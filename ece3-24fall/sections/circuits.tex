@@ -47,8 +47,8 @@ given by\\
 \begin{scriptsize}
   $V_C(0^+) + \qty{20}{\volt} - V_L(0^+) + \qty{8}{\kilo\ohm}(\qty{7}{\milli\ampere})=0.$
 \end{scriptsize}\\
-The capacitor voltage at $0^+$ is \qty{20}{\volt} which is negative for a CW KVL, so only the
-last term remains and we get \qty{56}{\volt}.
+The capacitor voltage at $0^+$ is \qty{20}{\volt} which is negative for
+a CW KVL, so only the last term remains and we get \qty{56}{\volt}.
 
 \subsection*{Second Order Circuit}
 \begin{center}
@@ -170,7 +170,7 @@ $V_O=\frac{R_2}{R_1}\left(V_2-V_1\right)$
 \subsection*{Switched Capacitor}
 \begin{center}
   \begin{circuitikz}[american, scale = 0.6, transform shape]
-    \ctikzset{bipoles/cuteswitch/thickness=0.4}
+    \ctikzset{bipoles/cuteswitch/thickness=0.3}
     \draw
     (0,0) to[battery, l=5V, invert] (0,3) % Battery
     to[cute closing switch, name=Sw] (3,3) % Switch
@@ -187,3 +187,12 @@ $\frac{d}{dt}v_C(t)+\frac{v_C(t)}{RC} = \frac{V_s}{RC}$ \\
 Plug and chug you get $K = \boxed{\qty{-3}{\volt}}$. And in equation
 form\\
 $v_C(t) = \boxed{\qty{5}{\volt} + (\qty{-3}{\volt})e^{-\frac{t}{\qty{10}{\micro\second}}}}$
+
+\subsection*{Op Amp with Cap}
+\begin{center}
+  \includegraphics[scale=0.35]{op-amp-vcr.png}
+\end{center}
+Find $V_o$ as a function of $V$, $C$, and $R$.\\
+$\frac{0-V_i}{R}+C\frac{d}{dt}\left(0-V_o\right)=0$\\
+$\frac{d}{dt}V_o=-\left(\frac{1}{RC}\right)V_i$\\
+$V_o=-\left(\frac{1}{RC}\right)\int V_idt$
