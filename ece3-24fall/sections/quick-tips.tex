@@ -1,0 +1,32 @@
+\section{Quick Tips}
+\subsection*{Kirchhoff Current Law (KCL)}
+Always assume currents are going out for \textit{all} nodes in the same
+circuit. Subtract voltage at node from voltage after the first component
+that changes it. If the whole branch (i.e. section with the same
+current) does not change voltage then make up a direction, label, and
+add it to the equation.
+
+\subsection*{Kirchhoff Voltage Law (KVL)}
+Try to avoid. If not possible do KCL first. Label all the branches and
+make up a current direction. Do all the loops clockwise (for ease). The
+chosen current directions determine where are voltage changes (+ to - or
+- to +). If the loop encounters + to - then make the term negative and
+make it positive otherwise.
+
+\subsection*{Transients Cap/Ind}
+After a long time.
+\begin{itemize}
+  \item \textbf{capacitors} $\equiv$ \textbf{open circuit}
+  \item \textbf{inductors} $\equiv$ \textbf{short circuit}
+\end{itemize}
+After a sudden switch flip you can assume all the inductors have the
+exact same current thru, and that all capacitors still have the exact
+same voltage across.
+
+\subsection*{Op Amps}
+Most of the time you want to set up KCL on the negative ($v_n$) and
+positive ($v_p$) nodes of the op amp input. Remember that ideal om amps
+NOT draw any current (can be ignored for KCL) and the voltage goes
+through from positive to negative unimpeded (all it does is measure the
+voltage to use in a VCVS). It will never output more voltage than the
+rails (usually not present in problems).
