@@ -22,40 +22,75 @@ server.}
 
 \small
 \subsection*{Internet Protocol Stack}
-\begin{itemize}
+\begin{itemize}[itemsep=0em]
   \item \textbf{application}: DNS, FTP, SMTP, HTTP
   \item \textbf{transport}: TCP, UDP
   \item \textbf{network}: IP
   \item \textbf{link}: ethernet, WiFi
 \end{itemize}
 \subsection*{Stateless Protocols}
-\begin{itemize}
+\begin{itemize}[itemsep=0em]
   \item HTTP/1.1
   \item DNS
   \item UDP
 \end{itemize}
 \subsection*{Stateful Protocols}
-\begin{itemize}
+\begin{itemize}[itemsep=0em]
   \item TCP
 \end{itemize}
 \subsection*{Has re-trans. timers}
-\begin{itemize}
+\begin{itemize}[itemsep=0em]
   \item DNS caching resolver
   \item TCP data sender
 \end{itemize}
 \subsection*{DOESN'T have re-trans. Timers}
-\begin{itemize}
+\begin{itemize}[itemsep=0em]
   \item HTTP client/server
   \item DNS auth. server
   \item TCP data receiver
 \end{itemize}
 \subsection*{Common HTTP responses}
-\begin{itemize}
+\begin{itemize}[itemsep=0em]
   \item 200 OK: request succeeded
   \item 301 Moved Permanently: object moved to a location specified in the message
   \item 400 bad request: message not understood by server
   \item 505 HTTP version not supported
 \end{itemize}
+\subsection*{Setup UDP (code)}
+For client call:
+\begin{footnotesize}
+  \begin{itemize}[itemsep=-0.5em]
+    \item \codebox{socket}
+    \item \codebox{recvfrom} and \codebox{sendto} to receive and send data.
+  \end{itemize}
+\end{footnotesize}
+For server call:
+\begin{footnotesize}
+  \begin{itemize}[itemsep=-0.5em]
+    \item \codebox{socket}
+    \item \codebox{bind} to an address to use
+    \item \codebox{recvfrom} and \codebox{sendto} to receive and send data.
+  \end{itemize}
+\end{footnotesize}
+\subsection*{Setup TCP (code)}
+For client call:
+\begin{footnotesize}
+  \begin{itemize}[itemsep=-0.5em]
+    \item \codebox{socket}
+    \item \codebox{connect} to server through socket
+    \item \codebox{recv} and \codebox{send} to receive and send data.
+  \end{itemize}
+\end{footnotesize}
+For server call:
+\begin{footnotesize}
+  \begin{itemize}[itemsep=-0.5em]
+    \item \codebox{socket}
+    \item \codebox{bind} to an address to use
+    \item \codebox{listen} to mark socket as passive
+    \item \codebox{accept} a single client connection
+    \item \codebox{recv} and \codebox{send} to receive and send data.
+  \end{itemize}
+\end{footnotesize}
 \subsection*{HTTP/1.0}
 It uses TCP. Allows 1 request per connection. Each request needs to
 reopen a connection. Allows parallel connections. Does not allow
