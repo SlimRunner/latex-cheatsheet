@@ -1,0 +1,44 @@
+\section{Homework Examples}
+\subsection*{Delay (tabulation)}
+\begin{center}
+  \begin{tikzpicture}[
+    scale = 0.45, transform shape,
+    >={Latex[black, length=1mm]},
+    node distance=2cm,
+    roundnode/.style={
+        circle, draw=black!80, fill=blue!5, minimum size=7mm
+      },
+  ]
+  \node[roundnode](A) {A};
+  \node[roundnode](R1) [right=of A] {R1};
+  \node[roundnode](R2) [right=of R1] {R2};
+  \node[roundnode](B) [right=of R2] {B};
+  \node[node distance=0.25cm] [left=of A] {\qty{125}{\byte}};
+  \path[-]
+    (A) edge [] node[above]{\qty{2}{Mbps}} (R1)
+    (R1) edge [] node[above]{\qty{1}{Mbps}} (R2)
+    (R2) edge [] node[above]{\qty{2}{Mbps}} (B)
+  ;
+  \end{tikzpicture}
+  \begin{scriptsize}
+    \begin{itemize}
+      \item sending 4 packets from A to B
+      \item propagation delay is \qty{5}{\milli\second} for all links
+    \end{itemize}
+  \end{scriptsize}
+  \resizebox{5cm}{!}{
+    \begin{tabular}{ |r|r|r|r|r|r|r| }
+      \hline
+      \multicolumn{1}{|c|}{P$_{\#}$} & \multicolumn{1}{c|}{A$\to$} & \multicolumn{1}{c|}{$\to$R1} & \multicolumn{1}{c|}{R1$\to$} & \multicolumn{1}{c|}{$\to$R2} & \multicolumn{1}{c|}{R2$\to$} & \multicolumn{1}{c|}{$\to$B} \\ [0.6ex]
+      \hline
+      1 & 0.5ms & 5.5ms & 6.5ms & 11.5ms & 12ms & 17ms \\
+      \hline
+      2 & 1ms & 6ms & 7.5ms & 12.5ms & 13ms & 18ms \\
+      \hline
+      3 & 1.5ms & 6.5ms & 8.5ms & 13.5ms & 14ms & 19ms \\
+      \hline
+      4 & 2ms & 7ms & 9.5ms & 14.5ms & 15ms & 20ms \\
+      \hline
+    \end{tabular}
+  }
+\end{center}

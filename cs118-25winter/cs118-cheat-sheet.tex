@@ -23,6 +23,10 @@
 \usepackage{etoolbox}
 \usepackage{listings}
 \usepackage{realboxes}
+\usetikzlibrary{arrows.meta}
+
+% for easy SI units
+\usepackage{siunitx}
 
 \let\bar\overline
 
@@ -32,8 +36,7 @@
 %\footnotesize
 \small
 \begin{multicols*}{5}
-  \lipsum % REMOVE WHEN PAGES ARE ADDED
-  % pages
+  \input{sections/hw-probs.tex}
 \end{multicols*}
 % \newpage
 % \begin{multicols*}{3}
