@@ -1,0 +1,33 @@
+\section{Formulae}
+\subsection*{TCP Retransmission}
+\begin{itemize}
+  \item \textbf{RTO}: retransmission timer
+  \item \textbf{RTT}: retransmission timeout
+  \item \textbf{SRTT}: sample retransmission timeout
+  \item \textbf{DevRTT}: safety margin for RTT  
+\end{itemize}
+\footnotesize
+For the first measurement where s is the actual sample taken \\
+$\mathrm{SRTT} = s$ \\
+$\mathrm{DevRTT} = \mathrm{SRTT} / 2$ \\
+Anything after where a and b are a values between 0 and 1 \\
+$\mathrm{SRTT} = (1 - a) * \mathrm{SRTT} + a * s$ \\
+$\mathrm{DevRTT} = (1 - b) * \mathrm{devRTT} + b * |\mathrm{SRTT} - s|$ \\
+$\mathrm{RTO} = \mathrm{SRTT} + 4 * \mathrm{DevRTT}$ \\
+typical params for a and b: \\
+$a = 1 / 8, b = 1 / 4$ \\
+\small
+\subsection*{Single Hop Delay}
+\begin{itemize}
+  \item $q$ : \# packets in queue
+  \item $d$ : link length
+  \item $R$ : bandwidth
+  \item $L$ : packet size
+  \item $s$ : propagation speed
+  \item $T$ : transmission delay
+  \item $P$ : propagation delay
+  \item $Q$ : queuing delay
+  \item $t$ : total delay
+\end{itemize}
+$Q = T\cdot q,~~T = \frac{L}{R},~~P = \frac{d}{s}$ \\
+$t = Q + T + P$ \\

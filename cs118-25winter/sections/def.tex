@@ -46,6 +46,17 @@ von~Tim~S.,~Seite~\thepage~von~2
   #1,
 }
 
+\newtcolorbox{myquote}{
+  colback=yellow!10!white,
+  colframe=yellow!75!black,
+  grow to right by=-2mm,
+  grow to left by=-2mm,
+  boxrule=0pt,
+  boxsep=0pt,
+  breakable
+}
+\newcommand{\blockquote}[1]{  \begin{myquote}  #1  \end{myquote}  }
+
 % make code font smaller
 % https://tex.stackexchange.com/a/399348/228904
 \setminted{fontsize=\footnotesize}
