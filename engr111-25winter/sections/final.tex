@@ -1,0 +1,147 @@
+\section{Final Targeted Subjects}
+\subsection{Profitability Index (PI)}
+The dollar amount you get in return per dollar invested. Not fit to
+compare mutually exclusive projects. Suitable for deciding if any number
+of projects are good for taking provided you can choose any combination
+of them and posses the budget. Basically, you choose them if they are
+better than the market value (i.e. PI is more than 1).
+
+\blockquote{It holds that if $\text{NPV}>0\Rightarrow\text{PI}>1$.}
+
+Where PV is present value and $C_0$ is initial investment:
+
+\blockquote{$\text{PI} = \text{PV}~/~C_0$}
+
+If we know the PI of $\text{PI}(Y-X) > 1$ then we can only be certain
+that Y is better than X. We have no idea if of any other comparison
+including X, Y, \textit{and} the market.
+
+Consider (where CF means cash flow at some time T)
+
+\blockquote{$\text{NPV}_A=\Sigma~\text{CFA}_T/(1+r)^T,~\text{NPV}_B=\Sigma~\text{CFB}_T/(1+r)^T$}
+
+\blockquote{
+  $\Rightarrow\text{PI}_A = (\text{NPV}_A+\text{CFA}_0)~/~\text{CFA}_0$ \\
+  $\Rightarrow\text{PI}_B = (\text{NPV}_B+\text{CFB}_0)~/~\text{CFB}_0$
+}
+
+For independent projects without a budget cap we choose whichever of A
+and B that is greater than 1. If they are mutually exclusive we would
+instead do
+
+\blockquote{
+  let $\text{CFAB}=\text{CFA} - \text{CFB}$ \\
+  then $\text{NPV}_{A-B}=\Sigma~\text{CFAB}_T/(1+r)^T$ \\
+  so $\text{PI}_{A-B} = (\text{NPV}_{A-B}+\text{CFAB}_0)~/~\text{CFAB}_0$
+}
+
+If $\text{PI}_{A-B}>1$ then A is better because for the extra investment
+in A relative to B, we are getting more in return than investing in B.
+The opposite holds true for $\text{PI}_{B-A}>1$.
+
+\subsection{Capital Budgeting}
+Types of cash flows considered:
+\begin{itemize}
+  \item \textbf{Opportunity Cost} [INCLUDED] forgone cash flows Example: renting unused land.
+  \item \textbf{Side Effect} [INCLUDED] taking new project affects existing ones. Example: new product cannibalizing sales.
+  \item \textbf{Sunk Cost} [EXCLUDED] past expenses. Example: old research costs.
+  \item \textbf{Allocated Cost} [EXCLUDED] expenses from unused assets. Example: unused shared office space.
+\end{itemize}
+Note that side effects can also be good. Specific cases include
+cannibalism, synergy, erosion.
+
+\subsection{Bonds}
+A bond consists of a coupon (fixed annual payment), face value (\$1000
+in the US), and a return rate or yield to maturity (also fixed). The
+price of the bond is affected by the market rate. The fixed quantities
+are related by the following equation:
+
+\blockquote{$\text{coupon rate}=\text{coupon} ~/~ \text{face value}$}
+
+Bond price is determined using NVP or annuities since all coupons are
+the same
+
+\blockquote{
+  $\mathrm{NVP}(r, [0,C_1,C_2,\dots,C_n+\text{Face Value}])$ \\
+  Or $\mathrm{An}(r,n,C) + \text{Face Value}/(1+r)^{n}$
+}
+
+To find a coupon rate ($x$) you can use the following simplification:
+
+\blockquote{$C\cdot\mathrm{An}(r,n,x) + \text{Face Value}/(1+r)^{n}=P$}
+
+If a regular price is case (1) and there is a default probability $p$ in
+case (2), then the present price of the bond is
+
+\blockquote{$(1-p)\mathrm{NPV}_1 + p\mathrm{NPV}_2$}
+
+Once issued a company sells \textit{all} bonds to the market. If it
+wishes to re-issue them it must buy the all back.
+
+\subsection{Stock Portfolio}
+Where $r_i$ is a single monthly return from a single company
+
+The mean return is: $\overline{r}=\text{avg}(r_i)$
+
+The variance of a return is: $\sigma_r^2 = \frac{1}{t-1}\sum_{i=1}^{t}(r_i-\overline{r})^2$
+
+The standard deviation is: $\sqrt{\sigma_r^2}$
+
+Covariance and correlation:
+
+\blockquote{
+  $\mathrm{Cov}(A,B) = \sigma_{A,B} = \frac{\sum(r_{A,t}-\overline{r}_A)(r_{B,t}-\overline{r}_B)}{T-1}$ \\
+  $\mathrm{Corr}(A,B) = \rho{A,B} = \frac{\sigma_{A,B}}{\sigma_A\cdot\sigma_B}$
+}
+
+For a portfolio (weighted average and weighted variance):
+\blockquote{
+  $\overline{r}_P=\sum_{i=\text{stocks}}\omega_i\overline{r}_i$ \\
+  $\sigma_P^2=\sum_{i}\sum_{j}\omega_i\omega_j\sigma_i\sigma_j\rho_{i,j}=\sum_{i}\sum_{j}\omega_i\omega_j\sigma_{i,j}$
+}
+
+Personal reminder of linear algebra simplification where
+$M_{\mathrm{Corr}}$ that is a $n\times n$ correlation matrix, and
+$M_{\mathrm{coeff}}$ is a $1\times n$ whose only row is $
+\{\omega_1\sigma_1, \omega_2\sigma_2, \dots, \omega_n\sigma_n\}$, then
+
+\blockquote{
+  $\sigma_P^2 = \mathrm{det}\left(M_{\mathrm{coeff}}\times M_{\mathrm{Corr}}\times M_{\mathrm{coeff}}^{\mathrm{T}}\right)$
+}
+
+Also, $\sum_{i=1}^{t}\omega_i = 1$.
+
+\subsection{Payback Discounted NPV}
+This is basically computing the NPV of each cash flow and making a
+cumulative sum of them to find out when the company breaks even with the
+initial investment.
+
+The discounted payback period is always longer than the simple payback
+period due to the effect of discounting. The latter is simply the
+cumulative sum of the face value of cash without taking into account the
+time value of money
+
+\subsection{Break Even Quantity}
+Common tool for analyzing the relationship between sales volume and
+profitability. There are three common break-even measures
+\begin{itemize}
+  \item Accounting break-even: sales volume at which net income = 0
+  \item Cash break-even: sales volume at which operating cash flow = 0
+  \item Financial break-even: sales volume at which net present value = 0
+\end{itemize}
+$\overline{P}\times Q-\mathrm{FC}-\mathrm{VC}\times Q-\text{Dep}(1-t)-(\mathrm{EAC}-\text{Dep}) = 0$
+
+That is the general formula where EAC is equivalent annual cost, FC is
+fixed cost, VC is variable cost, $Q$ is quantity, $\overline{P}$ is
+average price, and Dep is depreciation.
+
+A common simplification for \textrm{accounting} break even quantity is:
+
+\blockquote{$Q=(\mathrm{FC}+\text{Dep})~/~(\overline{P} - \mathrm{VC})$}
+
+A common simplification for \textrm{financial} break even quantity is:
+
+\blockquote{$Q = (\mathrm{EAC}-\text{Dep}+(1-t)(\mathrm{FC}+\text{Dep}))~/~((P-\mathrm{VC})(1-t))$}
+
+When $t=0$
+\blockquote{$Q = (\mathrm{EAC}+\mathrm{FC})~/~(P-\mathrm{VC})$}
