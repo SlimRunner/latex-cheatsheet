@@ -1,0 +1,45 @@
+\documentclass[10pt,landscape,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+%\usepackage[LY1,T1]{fontenc}
+%\usepackage{frutigernext}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=10mm,bottom=10mm,left=10mm,right=10mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+\usepackage{pdfpages}
+\usepackage[]{minted}
+\usepackage{lipsum}
+% https://tex.stackexchange.com/a/112573
+\usepackage[most]{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{listings}
+\usepackage{realboxes}
+\usetikzlibrary{arrows.meta}
+\usepackage{enumitem} % allow to change list item separation
+
+% for easy SI units
+\usepackage{siunitx}
+
+\let\bar\overline
+
+\include{sections/def}
+
+\begin{document}
+%\footnotesize
+% \small
+% \begin{multicols*}{5}
+%   \lipsum
+% \end{multicols*}
+% \newpage
+\begin{multicols*}{3}
+  \lipsum
+\end{multicols*}
+\end{document}
