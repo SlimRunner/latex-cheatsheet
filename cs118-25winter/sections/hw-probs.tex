@@ -1,44 +1,28 @@
 \section{Homework Examples}
-\subsection*{Delay (tabulation)}
-\begin{center}
-  \begin{tikzpicture}[
-    scale = 0.45, transform shape,
-    >={Latex[black, length=1mm]},
-    node distance=2cm,
-    roundnode/.style={
-        circle, draw=black!80, fill=blue!5, minimum size=7mm
-      },
-  ]
-  \node[roundnode](A) {A};
-  \node[roundnode](R1) [right=of A] {R1};
-  \node[roundnode](R2) [right=of R1] {R2};
-  \node[roundnode](B) [right=of R2] {B};
-  \node[node distance=0.25cm] [left=of A] {\qty{125}{\byte}};
-  \path[-]
-    (A) edge [] node[above]{\qty{2}{Mbps}} (R1)
-    (R1) edge [] node[above]{\qty{1}{Mbps}} (R2)
-    (R2) edge [] node[above]{\qty{2}{Mbps}} (B)
-  ;
-  \end{tikzpicture}
-  \begin{scriptsize}
-    \begin{itemize}
-      \item sending 4 packets from A to B
-      \item propagation delay is \qty{5}{\milli\second} for all links
-    \end{itemize}
-  \end{scriptsize}
-  \resizebox{5cm}{!}{
-    \begin{tabular}{ |r|r|r|r|r|r|r| }
-      \hline
-      \multicolumn{1}{|c|}{P$_{\#}$} & \multicolumn{1}{c|}{A$\to$} & \multicolumn{1}{c|}{$\to$R1} & \multicolumn{1}{c|}{R1$\to$} & \multicolumn{1}{c|}{$\to$R2} & \multicolumn{1}{c|}{R2$\to$} & \multicolumn{1}{c|}{$\to$B} \\ [0.6ex]
-      \hline
-      1 & 0.5ms & 5.5ms & 6.5ms & 11.5ms & 12ms & 17ms \\
-      \hline
-      2 & 1ms & 6ms & 7.5ms & 12.5ms & 13ms & 18ms \\
-      \hline
-      3 & 1.5ms & 6.5ms & 8.5ms & 13.5ms & 14ms & 19ms \\
-      \hline
-      4 & 2ms & 7ms & 9.5ms & 14.5ms & 15ms & 20ms \\
-      \hline
-    \end{tabular}
-  }
-\end{center}
+\subsection{Utilization}
+Using the topology in section \ref{ssec:delaytable} node A sends a file
+of infinite size to node B. The packet size is \qty{1000}{\byte}. The
+ACK is of negligible size so has 0 tranmission delay.
+
+Using stop-and-wait for a single packet from $A\to R_1$ trans is \qty{1}{\milli\second} prop
+is \qty{2}{\milli\second}, from $R_1\to R_2$ trans is
+\qty{4}{\milli\second} prop is \qty{4}{\milli\second}, from $R_2\to B$
+trans is \qty{1}{\milli\second} prop is \qty{2}{\milli\second}.
+
+Total trans time is $1+4+1=6$ and total prop time is $2+4+2=8$. Total
+time for ACK is just the prop time since it has negligible size. Total
+time to wait for the ACK is $6+8\cdot2 = \qty{22}{\milli\second}$.
+
+Utilization is at $A\to R_1$ transmission which is
+\qty{1}{\milli\second}. Therefore, utilization is $\frac{1}{22}\approx
+4.5\%$.
+
+Now assume that we use Go-Back-N. There is no retrans timer the R nodes
+have finite, but really large packet buffers. Links have no loses. What
+is the max possible throughput without loses (remember that overflowing
+the buffer will cause packet drop). We will use the bottleneck to
+compute the sliding window. Total in flight time is
+\qty{22}{\milli\second}. The bottleneck is at $R_1\to R_2$ and all that
+matters is the transmisison delay which is \qty{4}{\milli\second}.
+Therefore, sliding window can be of size $\lceil\frac{22}{4}\rceil=6$
+which is also the max \# of in-flight packet.

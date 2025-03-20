@@ -6,7 +6,7 @@
 %\usepackage{frutigernext}
 %\usepackage[lf,minionint]{MinionPro}
 \usepackage{tikz}
-\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usetikzlibrary{automata,shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
 \usepackage[nosf]{kpfonts}
 \usepackage[t1]{sourcesanspro}
 \usepackage{multicol}
@@ -24,6 +24,7 @@
 \usepackage{realboxes}
 \usetikzlibrary{arrows.meta}
 \usepackage{enumitem} % allow to change list item separation
+\usepackage{multirow}
 
 % for easy SI units
 \usepackage{siunitx}
@@ -41,8 +42,8 @@
   \input{sections/formulae.tex}
   \input{sections/term-index.tex}
 \end{multicols*}
-% \newpage
-% \begin{multicols*}{3}
-%   % pages
-% \end{multicols*}
+\newpage
+\begin{multicols*}{3}
+  \input{sections/dgrams-n-tables.tex}
+\end{multicols*}
 \end{document}

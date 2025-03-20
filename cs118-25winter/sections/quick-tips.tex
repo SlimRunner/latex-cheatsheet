@@ -1,5 +1,5 @@
 \section{Quick Facts}
-\subsection*{Miscellaneous Tips}
+\subsection{Miscellaneous Tips}
 \footnotesize
 \blockquote{A DNS server using UDP will query a different authoritative
 server if its first query is lost (assuming there are multiple
@@ -20,43 +20,45 @@ server.}
 \blockquote{\textbf{Authoritative server} the final source of truth
 (either address or CNAME).}
 
+\blockquote{Do not bundle last (optional) ACK and FIN.}
+
 \small
-\subsection*{Internet Protocol Stack}
+\subsection{Internet Protocol Stack}
 \begin{itemize}[itemsep=0em]
   \item \textbf{application}: DNS, FTP, SMTP, HTTP
   \item \textbf{transport}: TCP, UDP
   \item \textbf{network}: IP
   \item \textbf{link}: ethernet, WiFi
 \end{itemize}
-\subsection*{Stateless Protocols}
+\subsection{Stateless Protocols}
 \begin{itemize}[itemsep=0em]
   \item HTTP/1.1
   \item DNS
   \item UDP
 \end{itemize}
-\subsection*{Stateful Protocols}
+\subsection{Stateful Protocols}
 \begin{itemize}[itemsep=0em]
   \item TCP
 \end{itemize}
-\subsection*{Has re-trans. timers}
+\subsection{Has re-trans. timers}
 \begin{itemize}[itemsep=0em]
   \item DNS caching resolver
   \item TCP data sender
 \end{itemize}
-\subsection*{DOESN'T have re-trans. Timers}
+\subsection{DOESN'T have re-trans. Timers}
 \begin{itemize}[itemsep=0em]
   \item HTTP client/server
   \item DNS auth. server
   \item TCP data receiver
 \end{itemize}
-\subsection*{Common HTTP responses}
+\subsection{Common HTTP responses}
 \begin{itemize}[itemsep=0em]
   \item 200 OK: request succeeded
   \item 301 Moved Permanently: object moved to a location specified in the message
   \item 400 bad request: message not understood by server
   \item 505 HTTP version not supported
 \end{itemize}
-\subsection*{Setup UDP (code)}
+\subsection{Setup UDP (code)}
 For client call:
 \begin{footnotesize}
   \begin{itemize}[itemsep=-0.5em]
@@ -72,7 +74,7 @@ For server call:
     \item \codebox{recvfrom} and \codebox{sendto} to receive and send data.
   \end{itemize}
 \end{footnotesize}
-\subsection*{Setup TCP (code)}
+\subsection{Setup TCP (code)}
 For client call:
 \begin{footnotesize}
   \begin{itemize}[itemsep=-0.5em]
@@ -91,19 +93,19 @@ For server call:
     \item \codebox{recv} and \codebox{send} to receive and send data.
   \end{itemize}
 \end{footnotesize}
-\subsection*{HTTP/1.0}
+\subsection{HTTP/1.0}
 It uses TCP. Allows 1 request per connection. Each request needs to
 reopen a connection. Allows parallel connections. Does not allow
-pipelining
-\subsection*{HTTP/1.1}
+pipelining. Server initiates FIN.
+\subsection{HTTP/1.1}
 It uses TCP. Connection is persistent. As many requests per connection.
 Allows pipelining and parallel connections.
-\subsection*{HTTP/2.0}
+\subsection{HTTP/2.0}
 Similar to HTTP/1.1 but it brakes down large packets into frames. This
 allows to prevent some forms of head-of-line blocking (cannot prevent
 inherent TCP HoL blocking). It also allows to send multiple streams of
 data for multiplexing.
-\subsection*{HTTP Packet Types}
+\subsection{HTTP Packet Types}
 \resizebox{5cm}{!}{
   \begin{tabular}{ |l|l|l|l|l|l|l| }
     \hline
@@ -121,17 +123,50 @@ data for multiplexing.
     \hline
   \end{tabular}
 }
-\subsection*{TCP + TLS}
+\subsection{TCP + TLS}
 \begin{center}
   \includegraphics[scale=0.4]{images/tcp-n-tls.png}
 \end{center}
-\subsection*{Go-Back-N}
+\subsection{Stop-and-Wait}
+Exactly, that. Stops and waits for the ACK to return before sending the
+next packet.
+\subsection{Go-Back-N}
 Sender has sliding window and can send many unacknowledged packets.
 Acknowledgement is for the latest received packet w/o error and sender
 window slides. On packet loss it retransmits all packets in the sliding
 window. ACKs are cumulative. It does not buffers packets.
-\subsection*{Selective Repeat}
+\subsection{Selective Repeat}
 Sender has sliding window and can send many unacknowledged packets.
 Receiver acknowledges each received packet, and it buffers them
-(out-of-order if necessary). Sender ``selects'' ACKed packets and re-sends
-unACKed ones when their individual timers expire.
+(out-of-order if necessary). Sender ``selects'' ACKed packets and
+re-sends unACKed ones when their individual timers expire.
+\subsection{QUIC}
+QUIC does not retransmit a lost packet. Instead it sends it as a later
+packet. A QUIC connection has multiple streams which carry frames that
+can have multiple types. A frame cannot exeed a packet max size since
+they are bundled in a UDP packet.
+\subsection{Network Layer}
+Uses IP packets. \textbf{Forwarding:} move packets from a router's input
+link to appropriate router output link. Trip analogy: process of getting
+through single interchange. Data plane, local. \textbf{Routing:}
+determine route taken by packets from source to destination. Trip
+analogy: process of planning trip from source to destination. Control
+plane, network-wide. IP packets have TTL which prevents them from
+staying forever in a network (measured in remaining hops).
+\subsection{IP Packet Fragmentation}
+IP packets are prone to framentation. MTU is used to limite the size of
+packets. Packets are only reassembled at destination.
+\begin{center}
+  \resizebox{5cm}{!}{
+  \includegraphics[]{images/ip-frag.png}
+  }
+\end{center}
+Identifier: generated by the sending host. It identifies all the
+segments in the same IP packet and stays unchanged when refragmented.
+
+For flags bit 0 (left most) is reserved, bit 1 (DF bit) prevents
+fragmentation if set (dropped if it does not fit), and bit 2 (MF bit)
+helps determine the last fragment of a packet (and only the last).
+
+Fragment offset counts from the first byte in the original payload count
+in units of 8-byte blocks.

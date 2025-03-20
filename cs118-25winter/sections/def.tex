@@ -49,13 +49,21 @@ von~Tim~S.,~Seite~\thepage~von~2
 \newtcolorbox{myquote}{
   colback=yellow!20!white,
   colframe=yellow!75!black,
-  grow to right by=-2mm,
-  grow to left by=-2mm,
-  boxrule=0pt,
+  boxrule=0.2pt,
   boxsep=0pt,
   breakable
 }
 \newcommand{\blockquote}[1]{  \begin{myquote}  #1  \end{myquote}  }
+
+\newtcolorbox{myremark}[1][]{
+  colback=white,
+  colframe=white!50!black,
+  boxrule=1pt,
+  boxsep=0pt,
+  breakable,
+  #1,
+}
+\newcommand{\remarkbox}[1]{  \begin{myremark}  #1  \end{myremark}  }
 
 % make code font smaller
 % https://tex.stackexchange.com/a/399348/228904

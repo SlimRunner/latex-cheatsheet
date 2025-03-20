@@ -1,5 +1,5 @@
 \section{Formulae}
-\subsection*{TCP Retransmission}
+\subsection{TCP Retransmission}
 \begin{itemize}[itemsep=0em]
   \item \textbf{RTO}: retransmission timer
   \item \textbf{RTT}: retransmission timeout
@@ -17,7 +17,7 @@ $\mathrm{RTO} = \mathrm{SRTT} + 4 * \mathrm{DevRTT}$ \\
 typical params for a and b: \\
 $a = 1 / 8, b = 1 / 4$ \\
 \small
-\subsection*{Single Hop Delay}
+\subsection{Single Hop Delay}
 \begin{itemize}[itemsep=0em]
   \item $q$ : \# packets in queue
   \item $d$ : link length
@@ -31,3 +31,13 @@ $a = 1 / 8, b = 1 / 4$ \\
 \end{itemize}
 $Q = T\cdot q,~~T = \frac{L}{R},~~P = \frac{d}{s}$ \\
 $t = Q + T + P$ \\
+\subsection{IP Fragmentation Calc}
+Let $T$ be the total packet size (whole), and $M$ be the MTU. Then
+$P=T-20$ is the payload size. Then
+\remarkbox{
+  $F=\left\lfloor\frac{M-20}{8}\right\rfloor\cdot 8$ ~~frag payload \\
+  $N_{F}=\left\lfloor\frac{P}{F}\right\rfloor$~~\# large frags \\
+  $F_{\text{small}}=P-F\cdot N_{F}$ \\
+  $\text{offset}=\frac{F}{8}$
+}
+Add 20 back to each payload.
