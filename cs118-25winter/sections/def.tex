@@ -1,3 +1,24 @@
+% 3 binder holes
+% 2nd hole is right at the middle
+% 108.5 mm between binder holes
+% holes are 8 mm in diameter
+% holes are 10 mm away from the edge
+% https://tex.stackexchange.com/a/588353
+\newcommand{\printholes}[2]{%
+ \begin{tikzpicture}[overlay,remember picture,every node/.style={circle, minimum height=8mm,minimum width=8mm,draw, yshift = #1}]
+ \draw (current page.#2) node[xshift = 108.5mm]{};
+ \draw (current page.#2) node[xshift = 0mm]{};
+ \draw (current page.#2) node[xshift = -108.5mm]{};
+ \end{tikzpicture}%
+}
+\AddToHook{shipout/background}{%
+ \ifodd\value{page}
+   \printholes{-10mm}{north}
+    \else
+   \printholes{10mm}{south}
+ \fi
+}
+
 \definecolor{myblue}{cmyk}{1,.72,0,.38}
 
 \def\firstcircle{(0,0) circle (1.5cm)}
