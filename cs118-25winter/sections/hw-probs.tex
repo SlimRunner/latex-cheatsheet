@@ -24,5 +24,67 @@ the buffer will cause packet drop). We will use the bottleneck to
 compute the sliding window. Total in flight time is
 \qty{22}{\milli\second}. The bottleneck is at $R_1\to R_2$ and all that
 matters is the transmisison delay which is \qty{4}{\milli\second}.
-Therefore, sliding window can be of size $\lceil\frac{22}{4}\rceil=6$
-which is also the max \# of in-flight packet.
+Therefore, sliding window can be of size
+$\left\lceil\frac{22}{4}\right\rceil=6$ which is also the max \# of
+in-flight packet.
+\subsection{Routing Table Link State} \label{ssec:linkstateexp}
+\resizebox{5cm}{!}{
+\begin{tabular}{|r|r|r|r|r|}
+  \hline
+  \multicolumn{1}{|c|}{Step} &
+  \multicolumn{1}{|c|}{N'} &
+  $D(y), p(y)$ &
+  $D(z), p(z)$ &
+  $D(w), p(w)$ \\
+  \hline
+  \hline
+  0 & $x$ & $\mathbf{4, x}$ & $\mathbf{50, x}$ & $\infty, \varnothing$ \\
+  \hline
+  1 & $xy$ & $4, x$ & $\mathbf{7, y}$ & $\mathbf{5, y}$ \\
+  \hline
+  2 & $xyw$ & $4, x$ & $\mathbf{6, w}$ & $5, y$ \\
+  \hline
+  3 & $xywz$ & $4, x$ & $6, w$ & $5, y$ \\
+  \hline
+\end{tabular}
+}
+Solution to
+\begin{center}
+  \resizebox{3cm}{!}{
+  \begin{tikzpicture}[
+    node distance=1.0cm,
+    atnode/.style={
+        circle, draw=black!80, fill=red!80, very thick, minimum size=2mm
+      },
+    visitnode/.style={
+        circle, draw=black!80, fill=blue!40, very thick, minimum size=2mm
+      },
+    othernode/.style={
+        circle, draw=black!80, fill=blue!5, very thick, minimum size=2mm
+      },
+    blanknode/.style={
+        circle, draw=white, fill=white, very thick, minimum size=2mm
+      },
+    edgelbl/.style={
+        circle, draw=white, fill=white
+      },
+  ]
+  \node[blanknode](blank) {};
+  \node[atnode](x) [above=of blank] {x};
+  \node[othernode](y) [left=of blank] {y};
+  \node[othernode](z) [right=of blank] {z};
+  \node[othernode](w) [below=of blank] {w};
+
+  % \path[-]
+  %   (x) edge [above] node {4} (y)
+  % ;
+  \path[-, draw=black]
+    (x) edge node[edgelbl] {$4$} (y)
+    (x) edge node[edgelbl] {$50$} (z)
+    (w) edge node[edgelbl] {$1$} (y)
+    (w) edge node[edgelbl] {$1$} (z)
+    (y) edge node[edgelbl] {$3$} (z)
+  ;
+  \end{tikzpicture}
+  }
+\end{center}

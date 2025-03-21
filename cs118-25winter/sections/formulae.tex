@@ -29,8 +29,11 @@ $a = 1 / 8, b = 1 / 4$ \\
   \item $Q$ : queuing delay
   \item $t$ : total delay
 \end{itemize}
-$Q = T\cdot q,~~T = \frac{L}{R},~~P = \frac{d}{s}$ \\
-$t = Q + T + P$ \\
+\remarkbox{
+  $T = \frac{L}{R},~~P = \frac{d}{s}$ \\
+  $Q = T\cdot q,~~t = Q + T + P$ \\
+}
+% add newpage if needed to fix weird spacing
 \subsection{IP Fragmentation Calc}
 Let $T$ be the total packet size (whole), and $M$ be the MTU. Then
 $P=T-20$ is the payload size. Then
@@ -41,3 +44,29 @@ $P=T-20$ is the payload size. Then
   $\text{offset}=\frac{F}{8}$
 }
 Add 20 back to each payload.
+\subsection{CSMA/CD efficiency}
+Where $t_{\text{prop}}$ is maximum propagation delay between any 2 nodes
+and $t_{\text{trans}}$ is time to transmit a maximum-sized frame
+
+\remarkbox{
+  $\mathrm{Eff} = \frac{1}{1+5t_{\text{prop}}/\text{trans}}$
+}
+
+Efficiency approaches 1 as $t_{\text{prop}}\to 0$ or
+$t_{\text{trans}}\to\infty$
+\subsection{Aloha Probability}
+For pure aloha, one node success, any node success, max efficiency
+
+\remarkbox{
+  $p\cdot\left(1-p\right)^{2\left(N-1\right)}$
+  $Np\cdot\left(1-p\right)^{2\left(N-1\right)}$
+  $\frac{1}{2e}$ as $N\to\infty$
+}
+
+For slotted aloha
+
+\remarkbox{
+  $p\cdot\left(1-p\right)^{N-1}$
+  $Np\cdot\left(1-p\right)^{N-1}$
+  $\frac{1}{e}$ as $N\to\infty$
+}

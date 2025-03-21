@@ -135,17 +135,73 @@
     \end{tabular}
   }
 \end{center}
-\begin{scriptsize}
-  First fill the entire table using the base delay for each column. Now
-  modify the table left to right and top to bottom without skipping
-  columns. For every output column ($X\to$) take each term and add to it
-  the max of the term to the left and above (use 0 if there is none).
-  Then for every input column ($\to X$) simply add to each term the
-  value of the column to the left.
-\end{scriptsize}
+First fill the entire table using the base delay for each column. Now
+modify the table left to right and top to bottom without skipping
+columns. For every output column ($X\to$) take each term and add to it
+the max of the term to the left and above (use 0 if there is none). Then
+for every input column ($\to X$) simply add to each term the value of
+the column to the left.
 \subsection{The Big Picture}
 \begin{center}
   \resizebox{8cm}{!}{
   \includegraphics[]{images/big-picture.png}
+  }
+\end{center}
+\subsection{IP Tunneling}
+\begin{center}
+  \resizebox{8cm}{!}{
+  \includegraphics[]{images/ip-in-ip.png}
+  }
+\end{center}
+(1) This NAT router knows the Smart Inc. East Office’s (private) address
+block and its NAT router’s public IP address (the same is true for R2).
+
+(2) When an IP node receives an IP packet and see the destination is its
+own address, it removes the outer most header and look into next header.
+\subsection{MTU Frag Example}
+\begin{center}
+  \resizebox{8cm}{!}{
+  \includegraphics[]{images/mtu-frag-example.png}
+  }
+\end{center}
+\subsection{DHCP Discovery}
+\begin{center}
+  \resizebox{8cm}{!}{
+  \includegraphics[]{images/dhcp-discovery.png}
+  }
+\end{center}
+\subsection{TSL exchange diagram}
+\begin{center}
+  \resizebox{8cm}{!}{
+  \includegraphics[]{images/tls-mac-diagram.png}
+  }
+\end{center}
+\subsection{AS No Valley}
+\begin{center}
+  \resizebox{8cm}{!}{
+  \includegraphics[]{images/as-no-valley.png}
+  }
+\end{center}
+\subsection{Efficiency of Slotted Aloha}
+\begin{center}
+  \resizebox{8cm}{!}{
+  \includegraphics[]{images/aloha-detail.png}
+  }
+\end{center}
+\begin{center}
+  \resizebox{8cm}{!}{
+  \includegraphics[]{images/eff-aloha.png}
+  }
+\end{center}
+\subsection{Efficiency of Slotted Aloha} \label(ssec:bytestuffing)
+\begin{center}
+  \resizebox{8cm}{!}{
+  \includegraphics[]{images/byte-stuffing.png}
+  }
+\end{center}
+\subsection{Efficiency of Slotted Aloha} \label(ssec:bytestuffing)
+\begin{center}
+  \resizebox{8cm}{!}{
+  \includegraphics[]{images/split-poison.png}
   }
 \end{center}

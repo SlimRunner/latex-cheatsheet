@@ -5,11 +5,23 @@
 % holes are 10 mm away from the edge
 % https://tex.stackexchange.com/a/588353
 \newcommand{\printholes}[2]{%
- \begin{tikzpicture}[overlay,remember picture,every node/.style={circle, minimum height=8mm,minimum width=8mm,draw, yshift = #1}]
- \draw (current page.#2) node[xshift = 108.5mm]{};
- \draw (current page.#2) node[xshift = 0mm]{};
- \draw (current page.#2) node[xshift = -108.5mm]{};
- \end{tikzpicture}%
+  \begin{tikzpicture}[
+    overlay,
+    remember picture,
+    every node/.style={
+      circle,
+      minimum height=8mm,
+      minimum width=8mm,
+      draw,
+      yshift = #1,
+      color=white,
+      fill=white!85!black
+    }
+  ]
+  \draw (current page.#2) node[xshift = 108.5mm]{};
+  \draw (current page.#2) node[xshift = 0mm]{};
+  \draw (current page.#2) node[xshift = -108.5mm]{};
+  \end{tikzpicture}%
 }
 \AddToHook{shipout/background}{%
  \ifodd\value{page}
