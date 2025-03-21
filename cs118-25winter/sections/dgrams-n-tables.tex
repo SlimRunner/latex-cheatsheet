@@ -107,7 +107,7 @@
   ;
   \end{tikzpicture}
   \begin{scriptsize}
-    \begin{itemize}
+    \begin{itemize}[itemsep=0em]
       \item sending 4 packets from A to B
       \item In diagram propagation dealay is below link, and speed is above.
       \item base output delay is the transmission delay $\frac{\ell_\text{\tiny{pkt}}}{S_\text{\tiny{link}}}$ (use same units)
@@ -138,7 +138,7 @@
 First fill the entire table using the base delay for each column. Now
 modify the table left to right and top to bottom without skipping
 columns. For every output column ($X\to$) take each term and add to it
-the max of the term to the left and above (use 0 if there is none). Then
+the max of the terms to the left and above (use 0 if there is none). Then
 for every input column ($\to X$) simply add to each term the value of
 the column to the left.
 \subsection{The Big Picture}

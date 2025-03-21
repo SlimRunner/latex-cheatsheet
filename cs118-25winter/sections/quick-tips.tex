@@ -252,11 +252,17 @@ which prefix advertisement has passed. NEXT-HOP ndicates specific
 internal-AS router to next-hop AS.
 
 BGP route selection in order:
-\begin{itemize}[itemsep=0em]
-  \item local preference attribute: manually configured value according to AS policies
-  \item if same local preference value for multiple routes: choose the one with shortest AS path
-  \item then Lowest IGP cost (hot potato routing)
-\end{itemize}
+\begin{scriptsize}
+  \begin{enumerate}[itemsep=0em]
+    \item local preference attribute: manually configured value according to AS policies
+    \item if same local preference value for multiple routes: choose the one with shortest AS path
+    \item then Lowest IGP cost (hot potato routing)
+  \end{enumerate}
+\end{scriptsize}
+\subsection{No Valley Policy}
+\blockquote{
+  No two peers in a row. Peer to peer must be the highest point. Everyone must be compensated.
+}
 \subsection{Ethernet CSMA/CD Algorithm}
 (1) NIC receives datagram from network layer, creates frame. (2) If NIC
 senses channel idle, starts frame transmission. If NIC senses channel
