@@ -1,0 +1,26 @@
+\section{Definitions}
+\subsection{Homomorphism}
+It is a function
+$h : \Sigma^* \to \Delta^*$ Then
+
+$h(\epsilon) = \epsilon$ \\
+$a\in\Sigma, h(a) \text{ is any string in } \Delta^*$
+
+For $a=a_1a_2\dots a_n\in\Sigma^*$ where $n \geq 2$, then $h(a) = h(a_1)h(a_2)\dots h(a_n)$.
+
+\subsection{Language}
+Where $\Sigma$ is some alphabet $L \subseteq \Sigma^*$ then
+$L(M) = \{x \in \Sigma^* ~|~ M \text{ accepts } x\}$
+
+\subsection{Finite Automaton}
+$M = \left(Q, \Sigma, \delta, q_0, F\right)$
+
+$Q$ set of states, $\Sigma$ alphabet, $\sigma$ transition function, $q_0$ initial state, and $F$ set of final states.
+
+For DFA $\delta: Q\times\Sigma \to Q$\\
+For NFA $\delta: Q\times(\Sigma \cup \{\epsilon\}) \to \mathcal{P}(Q)$
+
+\subsection{De-Morgan's}
+$\overline{A \cup B} = \overline{A}\cap \overline{B}$
+\hspace{4mm}
+$\overline{A \cap B} = \overline{A}\cup \overline{B}$

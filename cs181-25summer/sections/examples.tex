@@ -1,0 +1,82 @@
+\section{Examples}
+\subsection{Regularity of Intersection}
+Let $A$ and $B$ be regular languages with alphabet $\Sigma$. Prove that
+$A\cap B$ is also regular.
+
+$M_A = (Q_A, \Sigma, \delta_A, q_0^A, F_A)$ \\
+$M_B = (Q_B, \Sigma, \delta_B, q_0^B, F_B)$
+
+There exists state machine $M_C$ such that it accepts strings in $A$ and
+$B$. It is defined as
+
+$M_C = (Q_A\times Q_B, \Sigma, \delta_C, (q_0^A, q_0^B), F_C)$
+
+where
+
+$\delta_C((q_A, q_B), x) = (\delta_A(q_A, x), \delta_B(q_B, x))$ \\
+$F_C = \left\{(q_A, q_B) ~|~ q_A \in F_A \text{ and } q_B \in F_B\right\}$
+
+\subsection{Regularity of Union}
+Same as above but the final states use an ``or''
+
+$F_C = \left\{(q_A, q_B) ~|~ q_A \in F_A \text{ or } q_B \in F_B\right\}$
+
+\subsection{Pumping Lemma Setup}
+Suppose $L$ is a regular language. Then $\exists p \geq 1$ s.t. $\forall
+w \in L$, we can write $w = xyz$, where $|y| \geq 1$, $|xy| \leq p$, and
+$xy^iz \in L$ for any $i\in \mathbb{Z}: i \geq 0$.
+
+Let $L = \{0^n 1^m | n < m\}$ for example. We can then define $w$ in
+some way that satisfies $L$: $w = 0^p1^{p+1}$. Note that $|w| \geq p$
+and $xy=0^p$, so $|xy| \leq p$
+
+Thus we can write $w = xyz$ where
+
+$y=0^j, \quad 1 \leq j \leq p$\\
+$x=0^k, \quad 1 \leq k \leq p - j$\\
+$z=0^{(p - j - k)}1^{p+1}$
+
+thus $w = 0^k0^j0^{(p-j-k)}1^{p+1}=0^{(k+j+p-j-k)}1^{p+1}=0^p1^{p+1}$
+
+Then we can pump up and let $i=2$
+
+$w^\prime = 0^k0^{2j}0^{(p-j-k)}1^{p+1}=0^{(k+2j+p-j-k)}1^{p+1}=0^{p+j}1^{p+1}$
+
+Because we defined $j$ in such a way that it must be 1 or larger then
+$p+j \geq p+1$; therefore $L$ is not regular.
+
+\subsection{Perfect Shuffle (zip)}
+For languages $A$ and $B$ over $\Sigma$, let the perfect shuffle be the
+language
+
+$\{w | w = a_1b_1 a_2b_2 \dots a_kb_k, 
+\text{ where } a_1\dots a_k \in A \text{ and } b_1\dots b_k \in B\}$
+
+Example: suppose that ``rose'' is in language $A$ and ``text'' is in
+language $B$, then the string "rtoesxet" is in the perfect shuffle of
+$A$ and $B$. Programmers know this more commonly as zipping. Show that
+the class of regular languages is closed under perfect shuffle.
+
+Solution: To show that regular languages are closed under perfect
+shuffle, it is sufficient to construct an FA that accepts the language
+of a perfect shuffle for any regular language $A$ and $B$.
+
+Because $A$ and $B$ are regular, we can construct DFA that accept both
+languages. We have DFA $M_1$ for $A$ that has state space $Q_1$ and DFA
+$M_2$ for $B$ with state space $Q_2$. The new new DFA for the shuffle
+$M_3$ would have state space $Q1\times Q_2\times {0,1}$. The extra set
+is to indicate whether to simulate $M_1$ or $M_2$. A state with 0 as the
+last member of triple would mean to simulate $M_1$ and a 1 to simulate
+$M_2$. The new start state of $M_3$ will be (start of Q1, start of
+$Q_2$, 0) to indicate to start by simulating $M_1$. After that $M_3$
+will transition to the next state to start simulating $M_2$:
+
+$\delta_{M_3}(~ ( q_{(0,1)}, q_{(0,2)} ), 1^\text{st} \text{ sym}~) = $\\
+$(\delta_{M_1}(q_{(0,1)}, 1^\text{st} \text{ sym}), q_{(0,2)}, 1)$
+
+Then $M_3$ will transition to the next state to start simulating $M_1$ again:
+
+$\delta_{M_3}(~ (\delta_{M_1}(q_{(0,1)}, 1^\text{st} \text{ sym}), q_{(0,2)}, 1), 2^\text{nd} \text{ sym} ~) = $\\
+$(\delta_{M_1}(q_{(0,1)}, 1^\text{st} \text{ sym}), \delta_{M_2}(q_{(0,2)}, 2^\text{nd} \text{ sym}), 0)$
+
+Thus $M_3$ will go back and forth, simulating the states in $M_1$ and $M_2$. The final states will be (Final States of $M_1$)$\times$(Final States of $M_2$)$\times$0, representing when each part of the string has been accepted by both $M_1$ and $M_2$ after the same number of number of simulations of both $M_1$ and $M_2$.
