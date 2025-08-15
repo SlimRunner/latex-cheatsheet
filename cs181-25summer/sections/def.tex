@@ -114,6 +114,25 @@ von~Tim~S.,~Seite~\thepage~von~2
   backgroundcolor=\color{codegray},
 }
 
+% https://tex.stackexchange.com/a/53359/228904
+% New definitions
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algnewcommand\algorithmicassert{\texttt{assert}}
+\algnewcommand\Assert[1]{\State \algorithmicassert(#1)}%
+% New "environments"
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndSwitch}%
+\algtext*{EndCase}%
+
+% https://tex.stackexchange.com/a/373172
+\algnewcommand\alginput{\hspace*{\algorithmicindent} \textbf{Input:~}}
+\algnewcommand\algoutput{\hspace*{\algorithmicindent} \textbf{Output:~}}
+\algnewcommand\algparam{\hspace*{\algorithmicindent} \textbf{Parameter:~}}
+\algnewcommand\algvar{\hspace*{\algorithmicindent} \textbf{Variable:~}}
+\algnewcommand\algreq{\hspace*{\algorithmicindent} \textbf{Require:~}}
+
 % inline codeboxes
 \definecolor{codegray}{rgb}{0.95,0.95,0.95}
 \lstset{%1
@@ -132,6 +151,10 @@ von~Tim~S.,~Seite~\thepage~von~2
                                 {.2ex}%x
                                 {\color{myblue}\sffamily\normalsize\bfseries}}
 \renewcommand{\subsection}{\@startsection{subsection}{1}{0mm}%
+                                {.2ex}%
+                                {.2ex}%x
+                                {\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{1}{0mm}%
                                 {.2ex}%
                                 {.2ex}%x
                                 {\sffamily\bfseries}}

@@ -25,6 +25,8 @@
 \usetikzlibrary{arrows.meta}
 \usepackage{enumitem} % allow to change list item separation
 \usepackage{multirow}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 
 % for easy SI units
 \usepackage{siunitx}
@@ -36,11 +38,21 @@
 \begin{document}
 %\footnotesize
 % \small
+% \begin{multicols*}{3}
+%   \input{sections/definitions.tex}
+%   \input{sections/examples.tex}
+%   \input{sections/diagrams.tex}
+% \end{multicols*}
 \begin{multicols*}{3}
-  \input{sections/definitions.tex}
-  \input{sections/examples.tex}
-  \input{sections/diagrams.tex}
+  \input{sections-02/definitions.tex}
+  \input{sections-02/examples.tex}
+  % add props of langs and props of TMs
+  % add examples of "show decidable"
+  % add examples of "show recognizable"
+  % add examples of "show undecidable"
+  % add examples of "is decidable or undecidable"
 \end{multicols*}
+
 % \newpage
 % \begin{multicols*}{3}
 % \end{multicols*}

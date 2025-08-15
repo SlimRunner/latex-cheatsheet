@@ -1,0 +1,135 @@
+\section{Definitions}
+\subsection{Machine Domains}
+\begin{tabular}{|c|c|c|}
+  \hline
+  DFA \& NFA & PDA & Turing Machines \\
+  \hline
+  Regex & CFG & Code \\
+  \hline
+\end{tabular}
+\subsection{Finite Automaton}
+$M = \left(Q, \Sigma, \delta, q_0, F\right)$
+
+\hspace{5mm}$Q$ set of states
+
+\hspace{5mm}$\Sigma$ alphabet
+
+\hspace{5mm}$\sigma$ transition function
+
+\hspace{5mm}$q_0$ initial state, and $F$ set of final states.
+
+\hspace{5mm}For DFA $\delta: Q\times\Sigma \to Q$
+
+\hspace{5mm}For NFA $\delta: Q\times(\Sigma \cup \{\epsilon\}) \to \mathcal{P}(Q)$
+\subsection{Context-Free Grammar}
+$G = (V, \Sigma, R, S)$
+
+\hspace{5mm}$V$: variables/non-terminals
+
+\hspace{5mm}$\Sigma$: symbols/terminals
+
+\hspace{5mm}$R$: rules $(A \to \alpha), A\in V, \alpha\in(V\cup\Sigma)^*$
+
+\hspace{5mm}$S$: initial variable, $S\in V$
+\subsection{Pushdown Automata}
+$M = (Q, \Sigma, q_0, \delta, F, \Gamma)$, NFA + stack
+
+\hspace{5mm}$Q$: states
+
+\hspace{5mm}$\Sigma$: alphabet
+
+\hspace{5mm}$q_0$: starting state
+
+\hspace{5mm}$\delta: Q\times\Sigma\times\Gamma \to \mathcal{P}(Q\times\Gamma)$
+
+\hspace{5mm}\hspace{9mm}pop\rotatebox[origin=c]{270}{$\Lsh$}\hspace{6.8mm}push\rotatebox[origin=c]{270}{$\Lsh$}
+
+\hspace{5mm}$F$: accepting states
+
+\hspace{5mm}$\Gamma$: stack alphabet
+\subsection{Turing Machine}
+$M = (Q, \Sigma, \Gamma, q_0, q_\mathrm{acc}, q_\mathrm{rej}, \delta)$, DFA + tape
+
+\hspace{5mm}$Q$: control states
+
+\hspace{5mm}$\Sigma$: input alphabet
+
+\hspace{5mm}$\Gamma$: tape alphabet ($\Sigma\subseteq\Gamma$)
+
+\hspace{5mm}$q_0$: initial state
+
+\hspace{5mm}$q_\mathrm{acc}$: accepting state
+
+\hspace{5mm}$q_\mathrm{rej}$: rejecting state
+
+\hspace{5mm}$\delta: Q\times\Gamma\to Q\times\Gamma\times\left\{L, R\right\}$
+
+\hspace{5mm}\hspace{2.6mm}read\rotatebox[origin=c]{270}{$\Lsh$}\hspace{11.5mm}\rotatebox[origin=c]{90}{$\Rsh$}write
+
+A TM first reads input, writes to tape, and moves left or right in that
+order. The possible results of a TM is to accept, to reject, or to loop.
+Accepting and rejecting means halting.
+
+A machine $M$ that \textbf{recognizes} $L$
+
+\hspace{5mm}$\forall w \in L, M \textrm{ accepts } w$
+
+\hspace{5mm}$\forall w \notin L, M \textrm{ rejects } w \textrm{ or loops}$
+
+A machine $M$ that \textbf{decides} $L$
+
+\hspace{5mm}$\forall w \in L, M \textrm{ accepts } w$
+
+\hspace{5mm}$\forall w \notin L, M \textrm{ rejects } w$
+
+\hspace{5mm}$M$ never loops
+\subsection{CFL Closures}
+\textbf{Closed}: union, concat, Kleene star, homomorphism, $L\cap R$
+
+\textbf{Not closed}: $L_1\cap L_2$, complement
+\subsection{Recursive Enumeration}
+An enumerator is a multi-tape TM with output write-only tape. Defined as
+
+$E(M) = \left\{w ~|~ M \textrm{ enumerates } w\right\}$
+
+If for a language $L ~~\exists M$ s.t. $L = E(M)$, then $L$ is recursively
+enumerable.
+
+\subsection{Halting Problem}
+$\mathrm{HALT} = \left\{\langle M, w \rangle ~|~ M \textrm{ halts on } w\right\}$
+is undecidable
+
+\subsection{Language Domains}
+Recursive enumeration implies lang is recognizable and vice versa.
+Undecidable is the same as not-computable.
+
+\hspace{5mm}Regular
+
+\hspace{10mm}Context-free ($0^n1^n$)
+
+\hspace{15mm}Decidable ($0^n1^n0^n$)
+
+\hspace{20mm}Recursively Enumerable
+
+\hspace{25mm}Undecidable
+
+For reductions $A \leq_m B$ means $A$ is lower or equal in the hierarchy
+than $B$. Implications can be drawn depending on what is given.
+
+\subsection{Decidable Closures}
+\textbf{Closed}: union, intersection, complement, concat, Kleene star,
+and inverse homomorphism.
+
+\textbf{Not closed}: homomorphism
+\subsection{Recursively Enumerable Closures}
+\textbf{Closed}: union, intersection, concat, Kleene star, homomorphism,
+and inverse homomorphism.
+
+\textbf{Not closed}: complement
+
+\subsection{Reductions}
+A function $f: \Sigma^\ast \to \Sigma^\ast$ is computable if $\exists$ a
+TM that, when given $w$ as input, halts with $f(w)$ on the tape. A
+computable reduction is defined as:
+
+$\forall w \in \Sigma^\ast, w\in A \iff f(w)\in B$
